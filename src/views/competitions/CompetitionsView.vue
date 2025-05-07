@@ -9,13 +9,13 @@
         tableStyle="min-width: 50rem"
       >
         <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+        <Column field="id" header="Id"></Column>
         <Column field="name" header="Name"></Column>
         <Column field="date" header="date"></Column>
         <Column field="stages" header="stages"></Column>
         <Column field="country" header="country"></Column>
         <Column field="city" header="city"></Column>
         <Column field="location" header="location"></Column>
-        <Column field="description" header="description"></Column>
       </DataTable>
     </div>
   </div>
