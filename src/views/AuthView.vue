@@ -21,7 +21,35 @@
 </template>
 
 <script setup>
+import { computed, reactive, ref } from 'vue';
+import { useAuthStore } from '@/stores/auth.js';
 
+const authStore = useAuthStore()
+
+const register = ref(false)
+
+const formTitle = computed(() => {
+  return register.value ? 'Register' : 'Login'
+})
+
+const credentials = reactive({
+  email: '',
+  password: ''
+})
+
+const onSubmit = () => {
+  if (!credentials.email || !credentials.password) {
+    alert('No empty fields!')
+  }
+  else {
+    if (register.value) {
+      authStore.registerUser(credentials)
+    }
+    else {
+      authStore.loginUser(credentials)
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">
