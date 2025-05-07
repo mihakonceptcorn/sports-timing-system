@@ -16,11 +16,20 @@
       <template #end>
         <div class="p-menubar-item-content">
           <a
+            v-if="!authStore.user.id"
             @click.prevent="login"
             v-ripple
             class="flex items-center cursor-pointer pi pi-sign-in p-menubar-item-link"
           >
             Login
+          </a>
+          <a
+            v-if="authStore.user.id"
+            @click.prevent="logout"
+            v-ripple
+            class="flex items-center cursor-pointer pi pi-sign-out p-menubar-item-link"
+          >
+            Logout
           </a>
         </div>
       </template>
@@ -29,10 +38,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from 'vue-router';
+import { ref } from "vue"
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.js';
 
-const router = useRouter();
+const router = useRouter()
+const authStore = useAuthStore()
 
 const items = ref([
   {
@@ -40,10 +51,14 @@ const items = ref([
     icon: 'pi pi-home',
     url: '/'
   },
-]);
+])
 
 const login = () => {
   router.push({name: 'auth'})
+}
+
+const logout = () => {
+  authStore.logoutUser()
 }
 </script>
 

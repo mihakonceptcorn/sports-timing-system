@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, markRaw } from 'vue'
 import { createPinia } from 'pinia'
 import PrimeVue from 'primevue/config'
 import Ripple from 'primevue/ripple'
@@ -13,13 +13,18 @@ const app = createApp(App)
 
 app.directive('ripple', Ripple)
 
+const pinia = createPinia()
+pinia.use(({ store }) => {
+  store.router = markRaw(router)
+})
+
 app.use(PrimeVue, {
   theme: {
     preset: Aura
   },
   ripple: true
 });
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
 
 app.mount('#app')
