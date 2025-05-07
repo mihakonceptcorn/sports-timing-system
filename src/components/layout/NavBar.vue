@@ -14,6 +14,15 @@
         </a>
       </template>
       <template #end>
+        <div v-if="authStore.user.id" class="p-menubar-item-content">
+          <a
+            @click.prevent="$router.push('/account')"
+            v-ripple
+            class="flex items-center cursor-pointer pi pi-user p-menubar-item-link"
+          >
+            My Account
+          </a>
+        </div>
         <div class="p-menubar-item-content">
           <a
             v-if="!authStore.user.id"
@@ -66,5 +75,8 @@ const logout = () => {
 .menu {
   padding-left: 40px !important;
   padding-right: 40px !important;
+}
+.p-menubar-end {
+  display: flex;
 }
 </style>

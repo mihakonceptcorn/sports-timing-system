@@ -14,7 +14,7 @@ export const useAuthStore = defineStore('authStore', {
         if (user) {
           this.user.id = user.uid
           this.user.email = user.email
-          this.router.push('/')
+          // this.router.push('/')
         } else {
           this.user = {}
           this.router.replace('/auth')

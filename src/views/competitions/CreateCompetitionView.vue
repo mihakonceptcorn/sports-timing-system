@@ -1,0 +1,68 @@
+<template>
+  <div class="create-competition w-full">
+    <h3 class="text-2xl">Create Competition</h3>
+
+    <div class="flex flex-col gap-0.5 mt-4">
+      <label for="compname">Competition Name</label>
+      <InputText v-model="formData.name" id="compname" placeholder="Competition Name" aria-describedby="username-help" />
+    </div>
+
+    <div class="flex flex-col gap-0.5 mt-2">
+      <label for="date">Date</label>
+      <DatePicker placeholder="Date" id="date" v-model="formData.date"/>
+    </div>
+
+    <div class="flex flex-col gap-0.5 mt-2">
+      <label for="stages">Number of stages</label>
+      <InputNumber placeholder="Stages" id="stages" v-model="formData.stages"/>
+    </div>
+    <div class="flex flex-col gap-0.5 mt-2">
+      <label for="roundsInStage">Rounds In Stage</label>
+      <InputNumber placeholder="Rounds In Stage" id="roundsInStage" v-model="formData.roundsInStage"/>
+    </div>
+
+    <div class="flex flex-col gap-0.5 mt-2">
+      <label for="country">Country</label>
+      <InputText placeholder="Country" id="country" type="text" v-model="formData.country"/>
+    </div>
+
+    <div class="flex flex-col gap-0.5 mt-2">
+      <label for="city">City</label>
+      <InputText placeholder="City" id="city" type="text" v-model="formData.city"/>
+    </div>
+
+    <div class="flex flex-col gap-0.5 mt-2">
+      <label for="location">Location</label>
+      <InputText placeholder="Location" id="location" type="text" v-model="formData.location"/>
+    </div>
+
+    <div class="flex flex-col gap-0.5 mt-2">
+      <label for="description">Description</label>
+      <TextArea placeholder="Description" id="description" type="text" v-model="formData.description"/>
+    </div>
+
+    <div class="gap-2 mt-4">
+      <Button label="Create" icon="pi pi-check-square" @click.prevent="create()"/>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { reactive } from 'vue';
+
+const formData = reactive({
+  name: null,
+  stages: null,
+  roundsInStage: null,
+  date: null,
+  country: null,
+  city: null,
+  location: null,
+  description: null,
+})
+
+</script>
+
+<style scoped lang="scss">
+
+</style>
