@@ -9,7 +9,16 @@
         tableStyle="min-width: 50rem"
       >
         <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-        <Column field="id" header="Id"></Column>
+        <Column field="id" header="Id">
+          <template #body="slotProps">
+            <a
+              @click.prevent="goToPreview(slotProps.data.id)"
+              class="text-green-600 cursor-pointer"
+            >
+              {{slotProps.data.id}}
+            </a>
+          </template>
+        </Column>
         <Column field="name" header="Name"></Column>
         <Column field="date" header="date"></Column>
         <Column field="stages" header="stages"></Column>
@@ -24,10 +33,16 @@
 <script setup>
 import { useCompetitionsStore} from '@/stores/competitions.js'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const competitionsStore = useCompetitionsStore()
+const router = useRouter()
 
 const selectedCompetitions = ref();
+
+const goToPreview = (id) => {
+  router.push({name: 'competition-preview', params: { id }})
+}
 
 </script>
 

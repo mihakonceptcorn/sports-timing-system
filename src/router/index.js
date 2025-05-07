@@ -5,6 +5,7 @@ import AccountView from '@/views/AccountView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import CompetitionsView from '@/views/competitions/CompetitionsView.vue'
 import CreateCompetitionView from '@/views/competitions/CreateCompetitionView.vue'
+import PreviewCompetitionView from '@/views/competitions/PreviewCompetitionView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
           path: 'competition-create',
           name: 'competition-create',
           component: CreateCompetitionView
+        },
+        {
+          path: 'competition-preview/:id',
+          name: 'competition-preview',
+          component: PreviewCompetitionView
         }
       ]
     },

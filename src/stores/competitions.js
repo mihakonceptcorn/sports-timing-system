@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { collection, onSnapshot, doc, addDoc, deleteDoc, updateDoc, query, orderBy, limit } from 'firebase/firestore'
+import { collection, onSnapshot, doc, getDoc, addDoc, deleteDoc, updateDoc, query, orderBy, limit } from 'firebase/firestore'
 import { db } from '@/js/firebase'
 import { useAuthStore } from '@/stores/auth.js'
 
@@ -55,7 +55,17 @@ export const useCompetitionsStore = defineStore('competitions', {
         owner: storeAuth.user.id,
       }
 
-      await addDoc(competitionsCollectionRef, payload);
+      await addDoc(competitionsCollectionRef, payload)
     },
+    async getCompetitionById(id) {
+      const docRef = doc(db, 'competitions', id)
+      const docSnap = await getDoc(docRef)
+
+      if (docSnap.exists()) {
+        return docSnap.data()
+      } else {
+        console.log("No such document!")
+      }
+    }
   }
 })
