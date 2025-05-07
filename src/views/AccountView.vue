@@ -13,8 +13,11 @@
 import { ref } from "vue"
 import { RouterView } from 'vue-router'
 import { useRouter } from 'vue-router'
+import { useCompetitionsStore } from '@/stores/competitions.js'
 
 const router = useRouter()
+const competitionsStore = useCompetitionsStore()
+competitionsStore.init()
 
 const items = ref([
   {

@@ -16,10 +16,6 @@
       <label for="stages">Number of stages</label>
       <InputNumber placeholder="Stages" id="stages" v-model="formData.stages"/>
     </div>
-    <div class="flex flex-col gap-0.5 mt-2">
-      <label for="roundsInStage">Rounds In Stage</label>
-      <InputNumber placeholder="Rounds In Stage" id="roundsInStage" v-model="formData.roundsInStage"/>
-    </div>
 
     <div class="flex flex-col gap-0.5 mt-2">
       <label for="country">Country</label>
@@ -42,24 +38,33 @@
     </div>
 
     <div class="gap-2 mt-4">
-      <Button label="Create" icon="pi pi-check-square" @click.prevent="create()"/>
+      <Button label="Create" icon="pi pi-check-square" @click.prevent="create"/>
     </div>
   </div>
 </template>
 
 <script setup>
 import { reactive } from 'vue';
+import { useCompetitionsStore } from '@/stores/competitions.js'
+import { useRouter } from 'vue-router';
+
+const competitionsStore = useCompetitionsStore()
+const router = useRouter()
 
 const formData = reactive({
   name: null,
   stages: null,
-  roundsInStage: null,
   date: null,
   country: null,
   city: null,
   location: null,
   description: null,
 })
+
+const create = async () => {
+  await competitionsStore.createCompetition(formData)
+  await router.push({name: 'competitions'})
+}
 
 </script>
 
