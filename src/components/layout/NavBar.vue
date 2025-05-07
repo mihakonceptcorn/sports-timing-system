@@ -1,0 +1,55 @@
+
+<template>
+  <div class="card">
+    <Menubar :model="items" class="menu">
+      <template #start>
+        <div class="navbar-logo"></div>
+      </template>
+      <template #item="{ item, props, hasSubmenu, root }">
+        <a v-ripple class="flex items-center" :class="item.icon" :href="item.url" v-bind="props.action">
+          <span>{{ item.label }}</span>
+          <Badge v-if="item.badge" :class="{ 'ml-auto': !root, 'ml-2': root }" :value="item.badge" />
+          <span v-if="item.shortcut" class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">{{ item.shortcut }}</span>
+          <i v-if="hasSubmenu" :class="['pi pi-angle-down ml-auto', { 'pi-angle-down': root, 'pi-angle-right': !root }]"></i>
+        </a>
+      </template>
+      <template #end>
+        <div class="p-menubar-item-content">
+          <a
+            @click.prevent="login"
+            v-ripple
+            class="flex items-center cursor-pointer pi pi-sign-in p-menubar-item-link"
+          >
+            Login
+          </a>
+        </div>
+      </template>
+    </Menubar>
+  </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const items = ref([
+  {
+    label: 'Home',
+    icon: 'pi pi-home',
+    url: '/'
+  },
+]);
+
+const login = () => {
+  router.push({name: 'auth'})
+}
+</script>
+
+<style lang="scss">
+.menu {
+  padding-left: 40px !important;
+  padding-right: 40px !important;
+}
+</style>
