@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { collection, onSnapshot, doc, getDoc, addDoc, deleteDoc, updateDoc, query, orderBy, limit } from 'firebase/firestore'
+import { collection, onSnapshot, doc, getDoc, addDoc, where, deleteDoc, updateDoc, query, orderBy, limit } from 'firebase/firestore'
 import { db } from '@/js/firebase'
 import { useAuthStore } from '@/stores/auth.js'
 
@@ -19,7 +19,11 @@ export const useCompetitionsStore = defineStore('competitions', {
       storeAuth = useAuthStore()
 
       competitionsCollectionRef = collection(db, 'competitions');
-      competitionsCollectionQuery = query(competitionsCollectionRef, orderBy('date', 'desc'));
+      competitionsCollectionQuery = query(
+        competitionsCollectionRef,
+        where('owner', '==', storeAuth.user.id),
+        orderBy('date', 'desc')
+      );
       this.getCompetitions()
     },
     getCompetitions() {
