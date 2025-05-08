@@ -2,7 +2,7 @@
   <div class="preview-competition w-full">
     <div class="flex justify-between">
       <Button
-        @click.prevent="startCompetition"
+        @click.prevent="$router.push({name: 'started', params: {id: $route.params.id}})"
         label="Start Competition"
         icon="pi pi-play"
         severity="danger"

@@ -13,8 +13,8 @@
 </template>
 
 <script setup>
-import {useTemplateRef} from 'vue';
-import {useFullscreen} from '@vueuse/core';
+import { useTemplateRef } from 'vue'
+import { useFullscreen } from '@vueuse/core'
 
 const el = useTemplateRef('fullscreen')
 const { isFullscreen, enter, exit, toggle } = useFullscreen(el)

@@ -51,9 +51,20 @@ export const useCompetitorsStore = defineStore('competitors', {
         region: competitorData.region,
         locality: competitorData.locality,
         competitorNumber: competitorData.competitorNumber,
+        started: false
       }
 
       await addDoc(competitorsCollectionRef, payload)
+    },
+    async updateStartTime(id, timestamp) {
+      await updateDoc(doc(competitorsCollectionRef, id), {
+        startTime: timestamp
+      });
+    },
+    async updateFinishTime(id, timestamp) {
+      await updateDoc(doc(competitorsCollectionRef, id), {
+        finishTime: timestamp
+      });
     }
   }
 })
