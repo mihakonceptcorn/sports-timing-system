@@ -8,8 +8,20 @@
 
     <Divider />
 
+    <div class="flex justify-center">
+      <div
+        v-if="timerStore.timers.length"
+        v-for="timer in timerStore.timers"
+        class="flex text-7xl justify-center items-center timer-item m-10"
+      >
+        {{ competitorsStore.competitors.filter(c => c.id === timer.competitorId)[0].competitorNumber }}
+      </div>
+    </div>
+
+    <Divider />
+
     <div
-      v-for="competitor in competitorsStore.competitors"
+      v-for="competitor in competitorsStore.competitors.filter(c => c.started === false)"
       class="button mt-10"
     >
       <Button
@@ -25,11 +37,13 @@
 
 <script setup>
 import { useCompetitorsStore } from '@/stores/competitors.js'
+import { useTimersStore } from '@/stores/timers.js'
 import { onMounted, useTemplateRef } from 'vue'
 import { useFullscreen } from '@vueuse/core'
 import { useRoute } from 'vue-router'
 
 const competitorsStore = useCompetitorsStore()
+const timerStore = useTimersStore()
 const route = useRoute()
 
 const el = useTemplateRef('fullscreen')
@@ -39,14 +53,17 @@ const toggleFullScreen = () => {
   toggle()
 }
 
-const createTimer = (id) => {
+const createTimer = (competitorId) => {
   const timestamp = Date.now()
 
-  // competitorsStore.updateStartTime(id, timestamp)
+  timerStore.createTimer(route.params.id, competitorId)
+
+  competitorsStore.updateStartTime(competitorId, timestamp)
 }
 
 onMounted(async () => {
   await competitorsStore.getCompetitors(route.params.id)
+  await timerStore.getTimers(route.params.id)
 })
 </script>
 
@@ -54,5 +71,12 @@ onMounted(async () => {
 .full {
   background-color: white;
   padding: 20px;
+}
+
+.timer-item {
+  width: 200px;
+  height: 200px;
+  background-color: red;
+  color: white;
 }
 </style>

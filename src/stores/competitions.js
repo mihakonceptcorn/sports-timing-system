@@ -50,6 +50,9 @@ export const useCompetitionsStore = defineStore('competitions', {
       }, error => {
         console.log('error.message: ', error.message)
       });
+
+
+
     },
     async createCompetition(competitionData) {
       const payload = {
