@@ -7,10 +7,13 @@ let competitionsCollectionRef = null
 let competitionsCollectionQuery = null
 let storeAuth = null
 let getCompetitionsSnapshot = null
+let getTimekeepingSnapshot = null
+
 export const useCompetitionsStore = defineStore('competitions', {
   state: () => {
     return {
       competitions: [],
+      timeKeepingCompetitions: [],
       isLoading: false
     }
   },
@@ -25,6 +28,7 @@ export const useCompetitionsStore = defineStore('competitions', {
         orderBy('date', 'desc')
       );
       this.getCompetitions()
+      this.getTimekeepingCompetitions()
     },
     getCompetitions() {
       getCompetitionsSnapshot = onSnapshot(competitionsCollectionQuery, (querySnapshot) => {
@@ -70,6 +74,37 @@ export const useCompetitionsStore = defineStore('competitions', {
       } else {
         console.log("No such document!")
       }
+    },
+    async addTimekeeper(competitionId, email) {
+      await updateDoc(doc(competitionsCollectionRef, competitionId), {
+        timekeeper: email
+      });
+    },
+    getTimekeepingCompetitions() {
+      const timekeepingCollectionQuery = query(
+        competitionsCollectionRef,
+        where('timekeeper', '==', storeAuth.user.email)
+      );
+
+      getTimekeepingSnapshot = onSnapshot(timekeepingCollectionQuery, (querySnapshot) => {
+        let tkCompetitions = []
+        querySnapshot.forEach((doc) => {
+          let note = {
+            id: doc.id,
+            name: doc.data().name,
+            stages: doc.data().stages,
+            date: doc.data().date,
+            country: doc.data().country,
+            city: doc.data().city,
+            location: doc.data().location,
+            description: doc.data().description,
+          }
+          tkCompetitions.push(note)
+        });
+        this.timeKeepingCompetitions = tkCompetitions
+      }, error => {
+        console.log('error.message: ', error.message)
+      });
     }
   }
 })

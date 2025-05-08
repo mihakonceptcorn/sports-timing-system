@@ -46,6 +46,13 @@ const items = ref([
           router.push({name: 'competition-create'})
         }
       },
+      {
+        label: 'Timekeeping',
+        icon: 'pi pi-stopwatch',
+        command: () => {
+          router.push({name: 'timekeeping'})
+        }
+      },
     ]
   },
   {

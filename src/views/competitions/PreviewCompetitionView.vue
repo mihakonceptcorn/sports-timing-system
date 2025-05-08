@@ -8,12 +8,15 @@
         severity="danger"
       />
 
-      <Button
-        @click.prevent="addFinisher"
-        label="Add Finisher"
-        icon="pi pi-user-plus"
-        severity="warn"
-      />
+      <div>
+        <InputText name="email" type="text" placeholder="Email" v-model="email" class="mr-1"/>
+        <Button
+          @click.prevent="addTimekeeper"
+          label="Add Timekeeper"
+          icon="pi pi-user-plus"
+          severity="warn"
+        />
+      </div>
 
       <Button
         @click.prevent="$router.push({name: 'competitions'})"
@@ -71,6 +74,7 @@ const competitionsStore = useCompetitionsStore()
 const competitorsStore = useCompetitorsStore()
 
 const competition = ref(null)
+const email = ref('')
 
 onMounted(async () => {
   competition.value = await competitionsStore.getCompetitionById(route.params.id)
@@ -81,8 +85,8 @@ const startCompetition = () => {
   console.log('Start');
 }
 
-const addFinisher = () => {
-  console.log('addFinisher');
+const addTimekeeper = () => {
+  competitionsStore.addTimekeeper(route.params.id, email.value)
 }
 
 </script>
