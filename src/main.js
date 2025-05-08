@@ -20,7 +20,10 @@ pinia.use(({ store }) => {
 
 app.use(PrimeVue, {
   theme: {
-    preset: Aura
+    preset: Aura,
+    options: {
+      darkModeSelector: '.my-app-dark'
+    }
   },
   ripple: true
 });

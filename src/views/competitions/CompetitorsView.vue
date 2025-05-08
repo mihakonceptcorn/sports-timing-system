@@ -23,7 +23,11 @@
         <Column field="team" header="Team"></Column>
         <Column field="competitorNumber" header="Number"></Column>
         <Column field="position" header="Position"></Column>
-        <Column field="time" header="Time"></Column>
+        <Column field="time" header="Time">
+          <template #body="slotProps">
+            {{ getTime(slotProps.data.startTime, slotProps.data.finishTime) }}
+          </template>
+        </Column>
       </DataTable>
     </div>
   </div>
@@ -36,6 +40,19 @@ import { ref } from 'vue'
 const competitorsStore = useCompetitorsStore()
 
 const selectedCompetitors = ref();
+
+const getTime = (start, finish) => {
+  if (!start || !finish) return  '--'
+
+  const diff = finish - start
+
+  const hours = Math.floor(diff / 3600000);
+  const minutes = Math.floor((diff % 3600000) / 60000);
+  const seconds = Math.floor((diff % 60000) / 1000);
+  const hundredths = Math.floor((diff % 1000) / 10);
+
+  return  hours + ':' + minutes + ':' + seconds + '.' + hundredths
+}
 </script>
 
 <style scoped lang="scss">

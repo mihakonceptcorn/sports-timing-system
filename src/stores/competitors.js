@@ -33,6 +33,8 @@ export const useCompetitorsStore = defineStore('competitors', {
             locality: doc.data().locality,
             competitorNumber: doc.data().competitorNumber,
             started: doc.data().started,
+            startTime: doc.data().startTime,
+            finishTime: doc.data().finishTime,
           }
           competitors.push(comp)
         });
