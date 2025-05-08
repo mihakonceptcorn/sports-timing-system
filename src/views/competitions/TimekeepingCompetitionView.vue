@@ -8,13 +8,31 @@
     <Button label="Full screen" @click.prevent="toggleFullScreen"/>
     <div>
       Comp ---- {{ $route.params.id }}
+
+      <div class="flex justify-center">
+        <div
+          @click="stopTimer(timer.id, timer.competitorId)"
+          v-if="timerStore.timers.length"
+          v-for="timer in timerStore.timers"
+          class="flex text-7xl justify-center items-center timer-item m-10"
+        >
+          {{ competitorsStore.competitors.filter(c => c.id === timer.competitorId)[0].competitorNumber }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useTemplateRef } from 'vue'
+import {onMounted, useTemplateRef} from 'vue'
 import { useFullscreen } from '@vueuse/core'
+import { useTimersStore } from '@/stores/timers.js'
+import { useCompetitorsStore } from '@/stores/competitors.js'
+import { useRoute } from 'vue-router'
+
+const competitorsStore = useCompetitorsStore()
+const timerStore = useTimersStore()
+const route = useRoute()
 
 const el = useTemplateRef('fullscreen')
 const { isFullscreen, enter, exit, toggle } = useFullscreen(el)
@@ -22,11 +40,32 @@ const { isFullscreen, enter, exit, toggle } = useFullscreen(el)
 const toggleFullScreen = () => {
   toggle()
 }
+
+const stopTimer = (timerId, competitorId) => {
+  const timestamp = Date.now()
+
+  competitorsStore.updateFinishTime(competitorId, timestamp)
+
+  timerStore.stopTimer(timerId)
+}
+
+onMounted(async () => {
+  await competitorsStore.getCompetitors(route.params.id)
+  await timerStore.getTimers(route.params.id)
+})
 </script>
 
 <style scoped lang="scss">
 .full {
   background-color: white;
   padding: 20px;
+}
+
+.timer-item {
+  width: 200px;
+  height: 200px;
+  background-color: red;
+  color: white;
+  cursor: pointer;
 }
 </style>
