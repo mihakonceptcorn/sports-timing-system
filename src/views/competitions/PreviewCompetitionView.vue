@@ -16,7 +16,7 @@
         />
       </div>
 
-      <h3 class="text-xl">{{ competition.name }}</h3>
+      <h3 class="text-xl" v-if="competition">{{ competition.name }}</h3>
 
       <Tabs value="1">
         <TabList>

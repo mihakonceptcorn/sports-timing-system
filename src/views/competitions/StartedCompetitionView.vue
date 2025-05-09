@@ -27,16 +27,15 @@
 
     <Divider />
 
-    <div
-      v-for="competitor in competitorsStore.competitors.filter(c => c.started === false)"
-      class="button mt-10"
-    >
+    <div class="mt-10">
       <Button
+        v-for="competitor in competitorsStore.competitors.filter(c => c.started === false).reverse()"
         @click.prevent="createTimer(competitor.id)"
         :label="competitor.name + ' -- ' + competitor.competitorNumber"
         :fluid="true"
         severity="warn"
         size="large"
+        class="start-timer-button mb-2 mr-2"
       />
     </div>
   </div>
@@ -85,5 +84,20 @@ onMounted(async () => {
   height: 200px;
   background-color: red;
   color: white;
+}
+
+.start-timer-button {
+  width: 100px;
+  pointer-events: none;
+  &:last-child {
+    width: 100%;
+    height: 200px;
+    pointer-events: all;
+    position: absolute !important;
+    left: 0;
+    bottom: 40px;
+    border: solid 4px green;
+    z-index: 999;
+  }
 }
 </style>
