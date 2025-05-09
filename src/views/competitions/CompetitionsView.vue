@@ -26,6 +26,13 @@
       <Column field="location" header="location"></Column>
     </DataTable>
   </div>
+
+  <Card v-else>
+    <template #title>There are no competitions here yet.</template>
+    <template #content>
+      <p>Go ahead and create the first one!</p>
+    </template>
+  </Card>
 </template>
 
 <script setup>

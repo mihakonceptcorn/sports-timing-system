@@ -4,6 +4,7 @@
     <template #start>
       <div class="navbar-logo"></div>
       <a
+        v-if="$route.name !== 'home'"
         @click.prevent="toggleMenu"
         v-ripple
         class="flex items-center cursor-pointer pi pi-bars p-menubar-item-link"
