@@ -1,6 +1,6 @@
 
 <template>
-  <Menubar class="w-full border-0" ref="menu">
+  <Menubar class="w-full" ref="menu">
     <template #start>
       <div class="navbar-logo"></div>
       <a
