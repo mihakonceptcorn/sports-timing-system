@@ -37,7 +37,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div class="w-full rounded-md p-4">
                     <span class="mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-surface-0 dark:bg-surface-800 shadow mx-auto">
-                        <i class="pi pi-desktop !text-2xl lg:!text-3xl text-primary-500 dark:text-primary-400" />
+                        <i class="pi pi-arrow-right !text-2xl lg:!text-3xl text-primary-500 dark:text-primary-400" />
                     </span>
               <div class="flex flex-col gap-1">
                 <div class="text-surface-900 dark:text-surface-0 text-xl font-medium leading-tight">Built for Developers</div>
@@ -46,7 +46,7 @@
             </div>
             <div class="w-full rounded-md p-4">
                     <span class="mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-surface-0 dark:bg-surface-800 shadow mx-auto">
-                        <i class="pi pi-lock !text-2xl lg:!text-3xl text-primary-500 dark:text-primary-400" />
+                        <i class="pi pi-arrow-right !text-2xl lg:!text-3xl text-primary-500 dark:text-primary-400" />
                     </span>
               <div class="flex flex-col gap-1">
                 <div class="text-surface-900 dark:text-surface-0 text-xl font-medium leading-tight">End-to-End Encryption</div>
@@ -55,7 +55,7 @@
             </div>
             <div class="w-full rounded-md p-4">
                     <span class="mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-surface-0 dark:bg-surface-800 shadow mx-auto">
-                        <i class="pi pi-face-smile !text-2xl lg:!text-3xl text-primary-500 dark:text-primary-400" />
+                        <i class="pi pi-arrow-down-left !text-2xl lg:!text-3xl text-primary-500 dark:text-primary-400" />
                     </span>
               <div class="flex flex-col gap-1">
                 <div class="text-surface-900 dark:text-surface-0 text-xl font-medium leading-tight">Easy to Use</div>
@@ -64,7 +64,7 @@
             </div>
             <div class="w-full rounded-md p-4">
                     <span class="mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-surface-0 dark:bg-surface-800 shadow mx-auto">
-                        <i class="pi pi-globe !text-2xl lg:!text-3xl text-primary-500 dark:text-primary-400" />
+                        <i class="pi pi-arrow-right !text-2xl lg:!text-3xl text-primary-500 dark:text-primary-400" />
                     </span>
               <div class="flex flex-col gap-1">
                 <div class="text-surface-900 dark:text-surface-0 text-xl font-medium leading-tight">Fast & Global Support</div>
@@ -73,7 +73,7 @@
             </div>
             <div class="w-full rounded-md p-4">
                     <span class="mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-surface-0 dark:bg-surface-800 shadow mx-auto">
-                        <i class="pi pi-github !text-2xl lg:!text-3xl text-primary-500 dark:text-primary-400" />
+                        <i class="pi pi-arrow-right !text-2xl lg:!text-3xl text-primary-500 dark:text-primary-400" />
                     </span>
               <div class="flex flex-col gap-1">
                 <div class="text-surface-900 dark:text-surface-0 text-xl font-medium leading-tight">Open Source</div>
@@ -82,7 +82,7 @@
             </div>
             <div class="w-full rounded-md p-4">
                     <span class="mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-surface-0 dark:bg-surface-800 shadow mx-auto">
-                        <i class="pi pi-shield !text-2xl lg:!text-3xl text-primary-500 dark:text-primary-400" />
+                        <i class="pi pi-flag !text-2xl lg:!text-3xl text-primary-500 dark:text-primary-400" />
                     </span>
               <div class="flex flex-col gap-1">
                 <div class="text-surface-900 dark:text-surface-0 text-xl font-medium leading-tight">Trusted Security</div>
