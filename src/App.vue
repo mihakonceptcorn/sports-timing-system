@@ -1,6 +1,10 @@
 <template>
-  <NavBar />
-  <RouterView />
+  <div class="layout-wrapper layout-static">
+    <div class="layout-topbar">
+      <NavBar />
+    </div>
+    <RouterView />
+  </div>
 </template>
 
 <script setup>

@@ -1,6 +1,6 @@
 <template>
-  <div class="home-view">
-    <Card class="mt-8">
+  <div class="layout-home">
+    <Card>
       <template #title>Sports Timing System</template>
       <template #content>
         <p class="m-0">
@@ -15,10 +15,6 @@
 <script setup>
 </script>
 
-<style lang="scss" scoped>
-.home-view {
-  max-width: 1200px;
-  padding: 0 20px;
-  margin: 0 auto;
-}
+<style lang="scss">
+
 </style>

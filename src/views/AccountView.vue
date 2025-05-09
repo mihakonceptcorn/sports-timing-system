@@ -1,9 +1,9 @@
 <template>
-  <div class="account flex">
-    <div class="card flex justify-start mt-6 ml-6">
-      <Menu :model="items" />
-    </div>
-    <div class="card flex justify-center mt-6 ml-6 mr-6 w-full">
+  <div class="layout-sidebar">
+    <Menu :model="items" class="mt-4" />
+  </div>
+  <div class="layout-main-container">
+    <div>
       <RouterView />
     </div>
   </div>

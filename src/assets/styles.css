@@ -2,9 +2,103 @@
 @import "tailwindcss-primeui";
 @import 'primeicons/primeicons.css';
 
+body {
+  background-color: var(--color-surface-100)
+}
+
 .navbar-logo {
   width: 40px;
   height: 40px;
   background-image: url('./images/timer-stopwatch-svgrepo-com.svg');
+}
+
+.card {
+  background-color: var(--color-surface-0);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+}
+
+.layout-topbar {
+  position: fixed;
+  height: 4rem;
+  z-index: 997;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding: 0 2rem;
+  background-color: var(--color-surface-0);
+  display: flex;
+  align-items: center;
+}
+
+.layout-sidebar {
+  position: fixed;
+  width: 16rem;
+  height: calc(100vh - 8rem);
+  z-index: 999;
+  overflow-y: auto;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  top: 6rem;
+  left: 2rem;
+  background-color: var(--color-surface-0);
+  border-radius: 10px;
+  padding: .5rem 1.5rem;
+}
+
+.layout-main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+  padding: 6rem 2rem 0;
+}
+
+.layout-main {
+  flex: 1 1 auto;
+}
+
+.layout-home {
+  padding: 6rem 2rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 992px) {
+  .layout-wrapper.layout-static .layout-main-container {
+    margin-left: 18rem;
+  }
+  .layout-wrapper.hidden-sidebar .layout-sidebar {
+    transform: translate(-100%);
+    left: 0;
+    top: 0;
+    height: 100vh;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    transition: transform .4s cubic-bezier(.05,.74,.2,.99), left .4s cubic-bezier(.05,.74,.2,.99);
+  }
+
+  .layout-wrapper.layout-static.hidden-sidebar .layout-main-container {
+    margin-left: 0;
+    padding-left: 2rem;
+  }
+}
+
+@media (max-width: 991px) {
+  .layout-wrapper .layout-sidebar {
+    transform: translate(-100%);
+    left: 0;
+    top: 0;
+    height: 100vh;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    transition: transform .4s cubic-bezier(.05,.74,.2,.99), left .4s cubic-bezier(.05,.74,.2,.99);
+  }
+
+  .layout-wrapper.active-m-sidebar .layout-sidebar {
+    transform: translate(0);
+  }
 }
 

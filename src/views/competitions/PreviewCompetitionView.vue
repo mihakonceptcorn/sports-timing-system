@@ -1,32 +1,21 @@
 <template>
   <div class="preview-competition w-full">
-    <div class="flex justify-between">
-      <Button
-        @click.prevent="$router.push({name: 'started', params: {id: $route.params.id}})"
-        label="Start Competition"
-        icon="pi pi-play"
-        severity="danger"
-      />
-
-      <div>
-        <InputText name="email" type="text" placeholder="Email" v-model="email" class="mr-1"/>
+    <div class="card">
+      <div class="flex justify-between mb-6 gap-2 flex-wrap">
         <Button
-          @click.prevent="addTimekeeper"
-          label="Add Timekeeper"
-          icon="pi pi-user-plus"
-          severity="warn"
+          @click.prevent="$router.push({name: 'started', params: {id: $route.params.id}})"
+          label="Start Competition"
+          icon="pi pi-play"
+          severity="danger"
+        />
+
+        <Button
+          @click.prevent="$router.push({name: 'competitions'})"
+          label="Go Back"
+          icon="pi pi-arrow-left"
         />
       </div>
 
-      <Button
-        @click.prevent="$router.push({name: 'competitions'})"
-        label="Go Back"
-        icon="pi pi-arrow-left"
-        class="mr-6"
-      />
-    </div>
-
-    <div class="card">
       <Tabs value="0">
         <TabList>
           <Tab value="0">Competition</Tab>
@@ -58,6 +47,16 @@
           </TabPanel>
         </TabPanels>
       </Tabs>
+
+      <div class="mt-6 flex gap-2 flex-wrap">
+        <InputText name="email" type="text" placeholder="Email" v-model="email" class="mr-1"/>
+        <Button
+          @click.prevent="addTimekeeper"
+          label="Add Timekeeper"
+          icon="pi pi-user-plus"
+          severity="warn"
+        />
+      </div>
     </div>
   </div>
 </template>
