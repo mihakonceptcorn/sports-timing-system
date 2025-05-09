@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-sidebar">
+  <div class="layout-sidebar bg-surface-0 dark:bg-surface-900">
     <Menu :model="items" class="mt-4" />
   </div>
   <div class="layout-main-container">

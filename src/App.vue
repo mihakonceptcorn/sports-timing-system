@@ -1,6 +1,6 @@
 <template>
-  <div class="layout-wrapper layout-static">
-    <div class="layout-topbar">
+  <div class="layout-wrapper layout-static bg-surface-100 dark:bg-gray-800">
+    <div class="fixed w-full border-r-0 pl-6 pr-6 bg-surface-100 dark:bg-surface-900">
       <NavBar />
     </div>
     <RouterView />

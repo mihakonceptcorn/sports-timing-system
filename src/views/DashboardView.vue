@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-surface-50 dark:bg-surface-950 px-6 py-8 md:px-12 lg:px-20">
+  <div class="px-6 py-8 md:px-12 p-card">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-      <div class="bg-surface-0 dark:bg-surface-900 shadow-sm p-5 rounded-2xl">
+      <div class="bg-surface-0 dark:bg-surface-800 shadow-sm p-5 rounded-2xl">
         <div class="flex justify-between gap-4">
           <div class="flex flex-col gap-2 cursor-pointer" @click="$router.push({name: 'competitions'})">
             <span class="text-surface-700 dark:text-surface-300 font-normal leading-tight">Active Competitions</span>
@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      <div class="bg-surface-0 dark:bg-surface-900 shadow-sm p-5 rounded-2xl">
+      <div class="bg-surface-0 dark:bg-surface-800 shadow-sm p-5 rounded-2xl">
         <div class="flex justify-between gap-4">
           <div class="flex flex-col gap-2">
             <span class="text-surface-700 dark:text-surface-300 font-normal leading-tight">Finished Competitions</span>
@@ -25,7 +25,7 @@
         </div>
       </div>
 
-      <div class="bg-surface-0 dark:bg-surface-900 shadow-sm p-5 rounded-2xl">
+      <div class="bg-surface-0 dark:bg-surface-800 shadow-sm p-5 rounded-2xl">
         <div class="flex justify-between gap-4">
           <div class="flex flex-col gap-2">
             <span class="text-surface-700 dark:text-surface-300 font-normal leading-tight">Canceled Competitions</span>
@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <div class="bg-surface-0 dark:bg-surface-900 shadow-sm p-5 rounded-2xl">
+      <div class="bg-surface-0 dark:bg-surface-800 shadow-sm p-5 rounded-2xl">
         <div class="flex justify-between gap-4">
           <div class="flex flex-col gap-2">
             <span class="text-surface-700 dark:text-surface-300 font-normal leading-tight">Total Competitors</span>
