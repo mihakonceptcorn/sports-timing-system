@@ -70,11 +70,13 @@
 <script setup>
 import { reactive } from 'vue'
 import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useCompetitorsStore } from '@/stores/competitors.js';
 
 const competitorsStore = useCompetitorsStore()
 
 const route = useRoute()
+const router = useRouter()
 
 const formData = reactive({
   competitionId: route.params.id,
@@ -92,6 +94,7 @@ const formData = reactive({
 
 const addCompetitor = async () => {
   await competitorsStore.addCompetitor(formData)
+  await router.push({name: 'competition-preview', params: { id: route.params.id }})
 }
 </script>
 

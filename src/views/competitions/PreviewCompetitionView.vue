@@ -16,7 +16,9 @@
         />
       </div>
 
-      <Tabs value="0">
+      <h3 class="text-xl">{{ competition.name }}</h3>
+
+      <Tabs value="1">
         <TabList>
           <Tab value="0">Competition</Tab>
           <Tab value="1">Competitors</Tab>
@@ -26,12 +28,12 @@
             <Card v-if="competition">
               <template #title>{{ competition.name }}</template>
               <template #content>
-                <p>country: {{ competition.country }}</p>
-                <p>city: {{ competition.city }}</p>
-                <p>location: {{ competition.location }}</p>
-                <p>date: {{ competition.date }}</p>
-                <p>stages: {{ competition.stages }}</p>
-                <p>description: {{ competition.description }}</p>
+                <p>country: <span class="font-bold">{{ competition.country }}</span></p>
+                <p>city: <span class="font-bold">{{ competition.city }}</span></p>
+                <p>location: <span class="font-bold">{{ competition.location }}</span></p>
+                <p>date: <span class="font-bold">{{ competition.date }}</span></p>
+                <p>stages: <span class="font-bold">{{ competition.stages }}</span></p>
+                <p>description: <span class="font-bold">{{ competition.description }}</span></p>
               </template>
             </Card>
           </TabPanel>

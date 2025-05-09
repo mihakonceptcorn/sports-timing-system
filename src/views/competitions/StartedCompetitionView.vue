@@ -4,6 +4,13 @@
     ref="fullscreen"
     class="started-competition w-full"
   >
+    <Button
+      label="Go back"
+      @click.prevent="$router.go(-1)"
+      severity="danger"
+      size="small"
+      class="mr-2"
+    />
     <Button label="Full screen" @click.prevent="toggleFullScreen" size="small"/>
 
     <Divider />
