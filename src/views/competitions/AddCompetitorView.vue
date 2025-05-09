@@ -23,12 +23,22 @@
 
     <div class="flex flex-col gap-0.5 mt-2">
       <label for="gender">Gender</label>
-      <InputText v-model="formData.gender" id="gender" placeholder="Gender" />
+      <Select
+        v-model="formData.gender"
+        :options="genders"
+        placeholder="Select gender"
+        class="w-full md:w-56"
+      />
     </div>
 
     <div class="flex flex-col gap-0.5 mt-2">
       <label for="category">Category</label>
-      <InputText v-model="formData.category" id="category" placeholder="Category" />
+      <Select
+        v-model="formData.category"
+        :options="categories"
+        placeholder="Select category"
+        class="w-full md:w-56"
+      />
     </div>
 
     <div class="flex flex-col gap-0.5 mt-2">
@@ -58,7 +68,7 @@
 
     <div class="flex flex-col gap-0.5 mt-2">
       <label for="competitorNumber">Competitor Number</label>
-      <InputText v-model="formData.competitorNumber" id="competitorNumber" placeholder="Competitor Number" />
+      <InputNumber v-model="formData.competitorNumber" id="competitorNumber" placeholder="Competitor Number" />
     </div>
 
     <div class="gap-2 mt-4">
@@ -71,12 +81,16 @@
 import { reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
-import { useCompetitorsStore } from '@/stores/competitors.js';
+import { useCompetitorsStore } from '@/stores/competitors.js'
+import { ref } from 'vue'
 
 const competitorsStore = useCompetitorsStore()
 
 const route = useRoute()
 const router = useRouter()
+
+const categories = ref(['amateurs', 'masters', 'elite', 'juniors'])
+const genders = ref(['Male', 'Female'])
 
 const formData = reactive({
   competitionId: route.params.id,
