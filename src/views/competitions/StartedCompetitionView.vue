@@ -30,10 +30,10 @@
     <div class="mt-10">
       <Button
         v-for="competitor in competitorsStore.competitors.filter(c => c.started === false).reverse()"
-        @click.prevent="createTimer(competitor.id)"
+        @click="createTimer(competitor.id)"
         :label="competitor.name + ' -- ' + competitor.competitorNumber"
         :fluid="true"
-        severity="warn"
+        severity="success"
         size="large"
         class="start-timer-button mb-2 mr-2"
       />
@@ -73,7 +73,7 @@ onMounted(async () => {
 })
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .full {
   background-color: white;
   padding: 20px;

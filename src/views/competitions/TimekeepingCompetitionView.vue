@@ -9,12 +9,12 @@
     <div>
       Comp ---- {{ $route.params.id }}
 
-      <div class="flex justify-center">
+      <div class="flex justify-center w-full">
         <div
           @click="stopTimer(timer.id, timer.competitorId)"
           v-if="timerStore.timers.length"
           v-for="timer in timerStore.timers"
-          class="flex text-7xl justify-center items-center timer-item m-10"
+          class="flex text-7xl justify-center items-center timer-item m-10 w-full"
         >
           {{ competitorsStore.competitors.filter(c => c.id === timer.competitorId)[0].competitorNumber }}
         </div>
@@ -62,10 +62,11 @@ onMounted(async () => {
 }
 
 .timer-item {
-  width: 200px;
-  height: 200px;
-  background-color: red;
+  height: 300px;
+  background-color: green;
   color: white;
   cursor: pointer;
+  position: absolute;
+  bottom: 40px;
 }
 </style>
