@@ -55,7 +55,7 @@
             </div>
             <div class="w-full rounded-md p-4">
                     <span class="mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-surface-0 dark:bg-surface-800 shadow mx-auto">
-                        <i class="pi pi-arrow-down-left !text-2xl lg:!text-3xl text-primary-500 dark:text-primary-400" />
+                        <i class="pi pi-arrow-right !text-2xl lg:!text-3xl text-primary-500 dark:text-primary-400" />
                     </span>
               <div class="flex flex-col gap-1">
                 <div class="text-surface-900 dark:text-surface-0 text-xl font-medium leading-tight">Easy to Use</div>

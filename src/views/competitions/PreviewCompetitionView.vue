@@ -1,6 +1,6 @@
 <template>
-  <div class="preview-competition w-full">
-    <div class="card">
+  <Card>
+    <template #content>
       <div class="flex justify-between mb-6 gap-2 flex-wrap">
         <Button
           @click.prevent="$router.push({name: 'started', params: {id: $route.params.id}})"
@@ -59,8 +59,8 @@
           severity="warn"
         />
       </div>
-    </div>
-  </div>
+    </template>
+  </Card>
 </template>
 
 <script setup>
