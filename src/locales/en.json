@@ -5,5 +5,27 @@
     "competitions": "Competitions",
     "create": "Create",
     "timekeeping": "Timekeeping"
+  },
+  "home": {
+    "hiw": {
+      "title": "How It Works",
+      "p1title": "Create a Competition",
+      "p1description": "In the main menu of your account, go to the \"Competitions\" section, click \"Create\", and fill in the required fields.",
+      "p2title": "Create Stages",
+      "p2description": "After creating a competition, add at least one stage.",
+      "p3title": "Add Participants",
+      "p3description": "Add participants to each stage.",
+      "p4title": "Finish Line",
+      "p4description": "Add the email address of the person responsible for timing at the finish line.",
+      "p5title": "Start the Participant",
+      "p5description": "On the stage page, click \"Start\". Tap the participant's number to begin the timer.\nThe person at the finish line will have access to the competition in the \"Timing\" section. The started participant's number will appear — clicking it will stop the timer.",
+      "p6title": "Get the Results",
+      "p6description": "All results are automatically saved in the participants' table for each stage."
+    },
+    "welcome": {
+      "title": "Smart Timing for MTB, Enduro, or Any Race with Individual Starts",
+      "description": "Run local downhill, enduro, or similar time-trial events using just smartphones. Start and stop timers remotely, manage participants, and get instant results — no expensive equipment needed.",
+      "join": "Join Now!"
+    }
   }
 }

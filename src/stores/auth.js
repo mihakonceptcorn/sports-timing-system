@@ -38,7 +38,7 @@ export const useAuthStore = defineStore('authStore', {
       signInWithEmailAndPassword(auth, credentials.email, credentials.password)
         .then((userCredential) => {
           const user = userCredential.user
-          this.router.push({ name: 'account' })
+          this.router.push({ name: 'dashboard' })
         })
         .catch((error) => {
           console.log('error message: ', error.message)

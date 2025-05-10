@@ -11,14 +11,17 @@
       ></a>
     </template>
     <template #end>
-      <div class="p-menubar-item-content">
+      <div class="p-menubar-item-content mr-6">
+        <LocaleSwitcher />
+      </div>
+      <div class="p-menubar-item-content mr-2">
         <a
           @click.prevent="$router.push('/')"
           v-ripple
           class="flex items-center cursor-pointer pi pi-home p-menubar-item-link"
         ></a>
       </div>
-      <div v-if="authStore.user.id" class="p-menubar-item-content">
+      <div v-if="authStore.user.id" class="p-menubar-item-content mr-6">
         <a
           @click.prevent="$router.push('/account')"
           v-ripple
@@ -38,9 +41,6 @@
           v-ripple
           class="flex items-center cursor-pointer pi pi-sign-out p-menubar-item-link"
         ></a>
-      </div>
-      <div class="p-menubar-item-content">
-        <LocaleSwitcher />
       </div>
     </template>
   </Menubar>

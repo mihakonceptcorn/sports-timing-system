@@ -36,10 +36,10 @@
 }
 
 .layout-home {
-  padding: 6rem 2rem 0;
+  padding: 6rem 1rem 0;
   display: flex;
   flex-direction: column;
-  max-width: 1070px;
+  max-width: 1270px;
   margin: 0 auto;
 }
 
