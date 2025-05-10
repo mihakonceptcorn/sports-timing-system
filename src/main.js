@@ -1,5 +1,6 @@
 import { createApp, markRaw } from 'vue'
 import { createPinia } from 'pinia'
+import i18n from './i18n'
 import PrimeVue from 'primevue/config'
 import Ripple from 'primevue/ripple'
 import Aura from '@primevue/themes/aura'
@@ -29,5 +30,6 @@ app.use(PrimeVue, {
 });
 app.use(pinia)
 app.use(router)
+app.use(i18n)
 
 app.mount('#app')

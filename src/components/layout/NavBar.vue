@@ -38,6 +38,7 @@
           v-ripple
           class="flex items-center cursor-pointer pi pi-sign-out p-menubar-item-link"
         ></a>
+        <LocaleSwitcher />
       </div>
     </template>
   </Menubar>
@@ -48,6 +49,7 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.js'
 import { onClickOutside } from '@vueuse/core'
 import { useTemplateRef } from 'vue'
+import LocaleSwitcher from '@/components/LocaleSwitcher.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()

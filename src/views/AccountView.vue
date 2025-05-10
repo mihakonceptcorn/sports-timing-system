@@ -10,18 +10,20 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import {computed, ref} from 'vue';
 import { RouterView } from 'vue-router'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
+const { t } = useI18n({ useScope: 'global' });
 
-const items = ref([
+const items = computed(() => [
   {
-    label: 'Dashboard',
+    label: '',
     items: [
       {
-        label: 'Dashboard',
+        label: t('sideBar.dashboard'),
         icon: 'pi pi-building-columns',
         command: () => {
           router.push({name: 'dashboard'})
@@ -68,7 +70,62 @@ const items = ref([
       }
     ]
   }
-]);
+])
+
+
+// const items = ref([
+//   {
+//     label: 'Dashboard',
+//     items: [
+//       {
+//         label: 'Dashboard',
+//         icon: 'pi pi-building-columns',
+//         command: () => {
+//           router.push({name: 'dashboard'})
+//         }
+//       },
+//     ]
+//   },
+//   {
+//     label: 'Competitions',
+//     items: [
+//       {
+//         label: 'Competitions',
+//         icon: 'pi pi-trophy',
+//         command: () => {
+//           router.push({name: 'competitions'})
+//         }
+//       },
+//       {
+//         label: 'Create',
+//         icon: 'pi pi-plus',
+//         command: () => {
+//           router.push({name: 'competition-create'})
+//         }
+//       },
+//       {
+//         label: 'Timekeeping',
+//         icon: 'pi pi-stopwatch',
+//         command: () => {
+//           router.push({name: 'timekeeping'})
+//         }
+//       },
+//     ]
+//   },
+//   {
+//     label: 'Profile',
+//     items: [
+//       {
+//         label: 'Settings',
+//         icon: 'pi pi-cog'
+//       },
+//       {
+//         label: 'Logout',
+//         icon: 'pi pi-sign-out'
+//       }
+//     ]
+//   }
+// ]);
 </script>
 
 <style scoped lang="scss">
