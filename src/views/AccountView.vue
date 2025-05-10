@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import {computed, ref} from 'vue';
+import { computed } from 'vue';
 import { RouterView } from 'vue-router'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -32,24 +32,24 @@ const items = computed(() => [
     ]
   },
   {
-    label: 'Competitions',
+    label: t('sideBar.competitions'),
     items: [
       {
-        label: 'Competitions',
+        label: t('sideBar.competitions'),
         icon: 'pi pi-trophy',
         command: () => {
           router.push({name: 'competitions'})
         }
       },
       {
-        label: 'Create',
+        label: t('sideBar.create'),
         icon: 'pi pi-plus',
         command: () => {
           router.push({name: 'competition-create'})
         }
       },
       {
-        label: 'Timekeeping',
+        label: t('sideBar.timekeeping'),
         icon: 'pi pi-stopwatch',
         command: () => {
           router.push({name: 'timekeeping'})

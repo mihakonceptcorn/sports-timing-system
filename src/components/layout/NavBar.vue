@@ -38,6 +38,8 @@
           v-ripple
           class="flex items-center cursor-pointer pi pi-sign-out p-menubar-item-link"
         ></a>
+      </div>
+      <div class="p-menubar-item-content">
         <LocaleSwitcher />
       </div>
     </template>

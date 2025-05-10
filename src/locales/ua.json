@@ -1,6 +1,9 @@
 {
   "navBar": {},
   "sideBar": {
-    "dashboard": "Інформаційна панель"
+    "dashboard": "Інформаційна панель",
+    "competitions": "Змагання",
+    "create": "Створити",
+    "timekeeping": "Хронометраж"
   }
 }

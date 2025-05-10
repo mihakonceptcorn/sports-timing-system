@@ -1,6 +1,9 @@
 {
   "navBar": {},
   "sideBar": {
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "competitions": "Competitions",
+    "create": "Create",
+    "timekeeping": "Timekeeping"
   }
 }
