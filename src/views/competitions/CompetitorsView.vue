@@ -12,11 +12,12 @@
           <a
             class="text-green-600 cursor-pointer"
           >
-            {{slotProps.data.id}}
+            {{ slotProps.data.id.slice(0, 5) + '...' }}
           </a>
         </template>
       </Column>
       <Column field="name" header="Name"></Column>
+      <Column field="secondName" header="Second Name"></Column>
       <Column field="gender" header="Gender"></Column>
       <Column field="category" header="Category"></Column>
       <Column field="team" header="Team"></Column>

@@ -13,11 +13,6 @@
       </div>
 
       <div class="flex flex-col gap-0.5 mt-2">
-        <label for="stages">Number of stages</label>
-        <InputNumber placeholder="Stages" id="stages" v-model="formData.stages"/>
-      </div>
-
-      <div class="flex flex-col gap-0.5 mt-2">
         <label for="country">Country</label>
         <InputText placeholder="Country" id="country" type="text" v-model="formData.country"/>
       </div>
@@ -54,7 +49,6 @@ const router = useRouter()
 
 const formData = reactive({
   name: null,
-  stages: null,
   date: null,
   country: null,
   city: null,

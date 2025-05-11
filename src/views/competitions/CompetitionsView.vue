@@ -15,13 +15,16 @@
               @click.prevent="goToPreview(slotProps.data.id)"
               class="text-green-600 cursor-pointer"
             >
-              {{slotProps.data.id}}
+              {{ slotProps.data.id.slice(0, 5) + '...' }}
             </a>
           </template>
         </Column>
         <Column field="name" header="Name"></Column>
-        <Column field="date" header="date"></Column>
-        <Column field="stages" header="stages"></Column>
+        <Column field="date" header="date">
+          <template #body="slotProps">
+            {{ getDate(slotProps.data.date) }}
+          </template>
+        </Column>
         <Column field="country" header="country"></Column>
         <Column field="city" header="city"></Column>
         <Column field="location" header="location"></Column>
@@ -46,6 +49,10 @@ const router = useRouter()
 
 const selectedCompetitions = ref();
 
+const getDate = (timestamp) => {
+  const date = new Date(timestamp)
+  return date.toLocaleDateString()
+}
 const goToPreview = (id) => {
   router.push({name: 'competition-preview', params: { id }})
 }

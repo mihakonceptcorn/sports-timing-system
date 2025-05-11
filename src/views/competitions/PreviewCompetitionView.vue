@@ -50,14 +50,17 @@
         </TabPanels>
       </Tabs>
 
-      <div class="mt-6 flex gap-2 flex-wrap">
-        <InputText name="email" type="text" placeholder="Email" v-model="email" class="mr-1"/>
-        <Button
-          @click.prevent="addTimekeeper"
-          label="Add Timekeeper"
-          icon="pi pi-user-plus"
-          severity="warn"
-        />
+      <div class="mt-6 flex gap-2 flex-wrap" v-if="competition">
+        <div v-if="competition.timekeeper">Timekeeper: {{ competition.timekeeper }}</div>
+        <div v-else>
+          <InputText name="email" type="text" placeholder="Email" v-model="email" class="mr-1"/>
+          <Button
+            @click.prevent="addTimekeeper"
+            label="Add Timekeeper"
+            icon="pi pi-user-plus"
+            severity="warn"
+          />
+        </div>
       </div>
     </template>
   </Card>
