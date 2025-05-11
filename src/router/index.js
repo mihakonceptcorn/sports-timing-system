@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { useAuthStore} from '@/stores/auth.js'
 import HomeView from '@/views/HomeView.vue'
 import AuthView from '@/views/AuthView.vue'
 import AccountView from '@/views/AccountView.vue'
@@ -72,6 +73,18 @@ const router = createRouter({
       ]
     },
   ],
+})
+
+router.beforeEach(async (to, from) => {
+  const authStore = useAuthStore()
+
+  if (!authStore.user.id && !['home', 'auth'].includes(to.name)) {
+    return { name: 'home' }
+  }
+
+  if (authStore.user.id && to.name === 'auth') {
+    return false
+  }
 })
 
 export default router

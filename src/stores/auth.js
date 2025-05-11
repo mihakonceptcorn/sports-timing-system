@@ -20,7 +20,7 @@ export const useAuthStore = defineStore('authStore', {
           // this.router.push('/')
         } else {
           this.user = {}
-          this.router.replace('/auth')
+          this.router.replace('/')
         }
       });
     },

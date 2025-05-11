@@ -14,7 +14,7 @@
             <div class="text-surface-700 dark:text-surface-100 text-xl leading-normal">
               {{ $t('home.welcome.description') }}
             </div>
-            <Button :label="$t('home.welcome.join')" rounded class="mt-4" />
+            <Button @click.prevent="$router.push({name: 'auth'})" :label="$t('home.welcome.join')" rounded class="mt-4" />
           </div>
         </div>
       </template>

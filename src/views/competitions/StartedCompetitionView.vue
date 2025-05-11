@@ -77,6 +77,9 @@ const createTimer = (competitorId) => {
         activeBtnLabel.innerText = '1'
         break
       case 3:
+        const timestamp = Date.now()
+        timerStore.createTimer(route.params.id, competitorId)
+        competitorsStore.updateStartTime(competitorId, timestamp)
         activeBtnLabel.innerText = 'GO!!!'
         break
     }
@@ -95,14 +98,6 @@ const createTimer = (competitorId) => {
     i++
     if (i === 4) clearInterval(beeper)
   }, 1000)
-
-
-
-  // const timestamp = Date.now()
-  //
-  // timerStore.createTimer(route.params.id, competitorId)
-  //
-  // competitorsStore.updateStartTime(competitorId, timestamp)
 }
 
 onMounted(async () => {
