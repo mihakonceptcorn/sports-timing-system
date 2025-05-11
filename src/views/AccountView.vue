@@ -20,7 +20,7 @@ const { t } = useI18n({ useScope: 'global' });
 
 const items = computed(() => [
   {
-    label: '',
+    label: 'Menu',
     items: [
       {
         label: t('sideBar.dashboard'),
