@@ -1,5 +1,5 @@
 <template>
-  <Card class="mt-6">
+  <Card>
     <template #content>
       <FullCalendar :options='calendarOptions' />
     </template>
