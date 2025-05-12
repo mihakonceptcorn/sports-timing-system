@@ -69,6 +69,11 @@
     padding: 4.5rem 1rem 1rem;
   }
 
+  .top-menu {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
   .layout-wrapper .layout-sidebar {
     transform: translate(-100%);
     left: 0;
