@@ -23,7 +23,9 @@ export const useTimersStore = defineStore('timers', {
           let timer = {
             id: doc.id,
             competitionId: doc.data().competitionId,
-            competitorId: doc.data().competitorId
+            stageId: doc.data().stageId,
+            competitorId: doc.data().competitorId,
+            number: doc.data().number
           }
           timers.push(timer)
         });
@@ -32,10 +34,12 @@ export const useTimersStore = defineStore('timers', {
         console.log('error.message: ', error.message)
       });
     },
-    async createTimer(competitionId, competitorId) {
+    async createTimer(competitionId, stageId, competitorId, number) {
       const payload = {
         competitionId: competitionId,
+        stageId: stageId,
         competitorId: competitorId,
+        number: number,
         active: true
       }
 

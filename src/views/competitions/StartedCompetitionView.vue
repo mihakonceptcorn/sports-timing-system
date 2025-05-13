@@ -30,7 +30,7 @@
     <div class="mt-10 flex">
       <Button
         v-for="competitor in competitorsStore.competitors.filter(c => c.started === false).reverse()"
-        @click="createTimer(competitor.id)"
+        @click="createTimer(competitor)"
         :label="competitor.name + ' -- ' + competitor.competitorNumber"
         :fluid="false"
         severity="success"
@@ -59,7 +59,7 @@ const toggleFullScreen = () => {
   toggle()
 }
 
-const createTimer = (competitorId) => {
+const createTimer = (competitor) => {
   let i = 0;
 
   const beeper = setInterval(() => {
@@ -78,8 +78,8 @@ const createTimer = (competitorId) => {
         break
       case 3:
         const timestamp = Date.now()
-        timerStore.createTimer(route.params.stageId, competitorId)
-        competitorsStore.updateStartTime(competitorId, timestamp)
+        timerStore.createTimer(route.params.id, route.params.stageId, competitor.id, competitor.competitorNumber)
+        competitorsStore.updateStartTime(competitor.id, timestamp)
         activeBtnLabel.innerText = 'GO!!!'
         break
     }
@@ -102,7 +102,7 @@ const createTimer = (competitorId) => {
 
 onMounted(async () => {
   await competitorsStore.getCompetitors(route.params.stageId)
-  await timerStore.getTimers(route.params.stageId)
+  await timerStore.getTimers(route.params.id)
 })
 </script>
 

@@ -11,12 +11,12 @@
 
       <div class="flex justify-center w-full">
         <div
-          @click="stopTimer(timer.id, timer.competitorId)"
+          @click="stopTimer(timer)"
           v-if="timerStore.timers.length"
           v-for="timer in timerStore.timers"
           class="flex text-7xl justify-center items-center timer-item m-10 w-full"
         >
-          {{ competitorsStore.competitors.filter(c => c.id === timer.competitorId)[0].competitorNumber }}
+          {{ timer.number }}
         </div>
       </div>
     </div>
@@ -41,12 +41,12 @@ const toggleFullScreen = () => {
   toggle()
 }
 
-const stopTimer = (timerId, competitorId) => {
+const stopTimer = (timer) => {
   const timestamp = Date.now()
 
-  competitorsStore.updateFinishTime(competitorId, timestamp)
+  competitorsStore.updateFinishTime(timer.competitorId, timestamp)
 
-  timerStore.stopTimer(timerId)
+  timerStore.stopTimer(timer.id)
 }
 
 onMounted(async () => {
