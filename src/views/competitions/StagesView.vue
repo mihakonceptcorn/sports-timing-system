@@ -10,7 +10,7 @@
       <Column field="id" header="Id">
         <template #body="slotProps">
           <a
-            @click.prevent="$router.push({ name: 'stage-preview', params: { id: slotProps.data.id, stageId: slotProps.data.id } })"
+            @click.prevent="$router.push({ name: 'stage-preview', params: { id: $route.params.id, stageId: slotProps.data.id } })"
             class="text-green-600 cursor-pointer"
           >
             {{ slotProps.data.id.slice(0, 5) + '...' }}

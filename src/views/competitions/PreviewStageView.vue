@@ -6,6 +6,13 @@
     <template #content>
       <div class="flex justify-between">
         <Button
+          @click.prevent="$router.push({name: 'started', params: {id: $route.params.id, stageId: stage.id}})"
+          label="Start stage"
+          icon="pi pi-play"
+          severity="danger"
+        />
+
+        <Button
           @click.prevent="visible = true"
           label="Add competitor"
           icon="pi pi-user-plus"
@@ -13,7 +20,7 @@
         />
 
         <Button
-          @click.prevent="visible = true"
+          @click.prevent="$router.push({name: 'competition-preview', params: { id: $route.params.id } })"
           label="Go back"
           icon="pi pi-arrow-left"
           class="mr-6"

@@ -56,7 +56,7 @@ const router = createRouter({
           component: PreviewStageView
         },
         {
-          path: 'competition/:id/started',
+          path: 'competition/:id/:stageId/started',
           name: 'started',
           component: StartedCompetitionView
         },

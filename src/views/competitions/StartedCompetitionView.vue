@@ -78,7 +78,7 @@ const createTimer = (competitorId) => {
         break
       case 3:
         const timestamp = Date.now()
-        timerStore.createTimer(route.params.id, competitorId)
+        timerStore.createTimer(route.params.stageId, competitorId)
         competitorsStore.updateStartTime(competitorId, timestamp)
         activeBtnLabel.innerText = 'GO!!!'
         break
@@ -101,8 +101,8 @@ const createTimer = (competitorId) => {
 }
 
 onMounted(async () => {
-  await competitorsStore.getCompetitors(route.params.id)
-  await timerStore.getTimers(route.params.id)
+  await competitorsStore.getCompetitors(route.params.stageId)
+  await timerStore.getTimers(route.params.stageId)
 })
 </script>
 
