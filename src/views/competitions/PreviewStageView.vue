@@ -13,13 +13,6 @@
         />
 
         <Button
-          @click.prevent="visible = true"
-          label="Add competitor"
-          icon="pi pi-user-plus"
-          class="mr-6"
-        />
-
-        <Button
           @click.prevent="$router.push({name: 'competition-preview', params: { id: $route.params.id } })"
           label="Go back"
           icon="pi pi-arrow-left"
@@ -29,6 +22,13 @@
       </div>
 
       <CompetitorsView />
+
+      <Button
+        @click.prevent="visible = true"
+        label="Add competitor"
+        icon="pi pi-user-plus"
+        class="mt-6"
+      />
 
       <Dialog v-model:visible="visible" modal header="Add competitor" :style="{ width: '25rem' }">
         <div class="flex flex-col gap-0.5">

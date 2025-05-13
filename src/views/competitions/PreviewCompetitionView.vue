@@ -1,20 +1,12 @@
 <template>
   <Card>
     <template #content>
-      <div class="flex justify-between mb-6 gap-2 flex-wrap">
-        <Button
-          @click.prevent="$router.push({name: 'started', params: {id: $route.params.id}})"
-          label="Start Competition"
-          icon="pi pi-play"
-          severity="danger"
-        />
-
-        <Button
-          @click.prevent="$router.push({name: 'competitions'})"
-          label="Go Back"
-          icon="pi pi-arrow-left"
-        />
-      </div>
+      <Button
+        @click.prevent="$router.push({name: 'competitions'})"
+        label="Go Back"
+        icon="pi pi-arrow-left"
+        class="mb-6"
+      />
 
       <h3 class="text-xl" v-if="competition">{{ competition.name }}</h3>
 
