@@ -18,10 +18,10 @@
 
       <h3 class="text-xl" v-if="competition">{{ competition.name }}</h3>
 
-      <Tabs value="1">
+      <Tabs value="0">
         <TabList>
           <Tab value="0">Competition</Tab>
-          <Tab value="1">Competitors</Tab>
+          <Tab value="1">Stages</Tab>
         </TabList>
         <TabPanels>
           <TabPanel value="0">
@@ -37,15 +37,15 @@
               </template>
             </Card>
           </TabPanel>
+
           <TabPanel value="1">
             <Button
-              @click.prevent="$router.push({name: 'add-competitor'})"
-              label="Add competitor"
-              icon="pi pi-user-plus"
-              class="mr-6"
+              @click.prevent="visible = true"
+              label="Create stage"
+              icon="pi pi-plus"
             />
 
-            <CompetitorsView />
+            <StagesView />
           </TabPanel>
         </TabPanels>
       </Tabs>
@@ -62,31 +62,52 @@
           />
         </div>
       </div>
+
+      <Dialog v-model:visible="visible" modal header="Create stage" :style="{ width: '25rem' }">
+        <div class="flex items-center gap-4 mb-4">
+          <label for="stageNumber" class="font-semibold w-24">Stage number</label>
+          <InputNumber v-model="stageData.number" id="stageNumber" class="flex-auto" autocomplete="off"/>
+        </div>
+        <div class="flex items-center gap-4 mb-8">
+          <label for="stageName" class="font-semibold w-24">Name</label>
+          <InputText v-model="stageData.name" id="stageName" class="flex-auto" autocomplete="off" />
+        </div>
+        <div class="flex justify-end gap-2">
+          <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
+          <Button type="button" label="Create" @click="createStage"></Button>
+        </div>
+      </Dialog>
     </template>
   </Card>
 </template>
 
 <script setup>
 import { useRoute } from 'vue-router'
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import { useCompetitionsStore } from '@/stores/competitions.js'
-import { useCompetitorsStore } from '@/stores/competitors.js'
-import CompetitorsView from '@/views/competitions/CompetitorsView.vue'
+import { useStagesStore } from '@/stores/stages.js'
+import StagesView from '@/views/competitions/StagesView.vue'
 
 const route = useRoute()
 const competitionsStore = useCompetitionsStore()
-const competitorsStore = useCompetitorsStore()
+const stagesStore = useStagesStore()
 
 const competition = ref(null)
 const email = ref('')
+const visible = ref(false)
+const stageData = reactive({
+  number: 1,
+  name: ''
+})
 
 onMounted(async () => {
   competition.value = await competitionsStore.getCompetitionById(route.params.id)
-  await competitorsStore.getCompetitors(route.params.id)
+  await stagesStore.getStages(route.params.id)
 })
 
-const startCompetition = () => {
-  console.log('Start');
+const createStage = () => {
+  visible.value = false
+  stagesStore.createStage(route.params.id, stageData.number, stageData.name)
 }
 
 const addTimekeeper = () => {

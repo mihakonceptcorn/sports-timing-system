@@ -7,10 +7,10 @@ import DashboardView from '@/views/DashboardView.vue'
 import CompetitionsView from '@/views/competitions/CompetitionsView.vue'
 import CreateCompetitionView from '@/views/competitions/CreateCompetitionView.vue'
 import PreviewCompetitionView from '@/views/competitions/PreviewCompetitionView.vue'
-import AddCompetitorView from '@/views/competitions/AddCompetitorView.vue'
 import TimekeepingView from '@/views/competitions/TimekeepingView.vue'
 import TimekeepingCompetitionView from '@/views/competitions/TimekeepingCompetitionView.vue'
 import StartedCompetitionView from '@/views/competitions/StartedCompetitionView.vue'
+import PreviewStageView from '@/views/competitions/PreviewStageView.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -51,9 +51,9 @@ const router = createRouter({
           component: PreviewCompetitionView
         },
         {
-          path: 'competition/:id/add-competitor',
-          name: 'add-competitor',
-          component: AddCompetitorView
+          path: 'competition/:id/:stageId',
+          name: 'stage-preview',
+          component: PreviewStageView
         },
         {
           path: 'competition/:id/started',
@@ -75,16 +75,16 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach(async (to, from) => {
-  const authStore = useAuthStore()
-
-  if (!authStore.user.id && !['home', 'auth'].includes(to.name)) {
-    return { name: 'home' }
-  }
-
-  if (authStore.user.id && to.name === 'auth') {
-    return false
-  }
-})
+// router.beforeEach(async (to, from) => {
+//   const authStore = useAuthStore()
+//
+//   if (!authStore.user.id && !['home', 'auth'].includes(to.name)) {
+//     return { name: 'home' }
+//   }
+//
+//   if (authStore.user.id && to.name === 'auth') {
+//     return false
+//   }
+// })
 
 export default router

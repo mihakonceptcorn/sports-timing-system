@@ -22,12 +22,12 @@
       <Column field="category" header="Category"></Column>
       <Column field="team" header="Team"></Column>
       <Column field="competitorNumber" header="Number"></Column>
-      <Column field="position" header="Position"></Column>
       <Column field="time" header="Time">
         <template #body="slotProps">
           {{ getTime(slotProps.data.startTime, slotProps.data.finishTime) }}
         </template>
       </Column>
+      <Column field="position" header="Position"></Column>
     </DataTable>
   </div>
 </template>

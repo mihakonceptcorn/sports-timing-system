@@ -12,8 +12,8 @@ export const useCompetitorsStore = defineStore('competitors', {
     }
   },
   actions: {
-    async getCompetitors(competitionId) {
-      const q = query(competitorsCollectionRef, where('competitionId', '==', competitionId));
+    async getCompetitors(stageId) {
+      const q = query(competitorsCollectionRef, where('stageId', '==', stageId));
       let competitors = []
 
       const querySnapshot = onSnapshot(q, (querySnapshot) => {
@@ -45,16 +45,14 @@ export const useCompetitorsStore = defineStore('competitors', {
     },
     async addCompetitor(competitorData) {
       const payload = {
-        competitionId: competitorData.competitionId,
+        stageId: competitorData.stageId,
         name: competitorData.name,
         secondName: competitorData.secondName,
         gender: competitorData.gender,
         category: competitorData.category,
         dob: competitorData.dob,
         team: competitorData.team,
-        country: competitorData.country,
-        region: competitorData.region,
-        locality: competitorData.locality,
+        address: competitorData.address,
         competitorNumber: competitorData.competitorNumber,
         started: false
       }
