@@ -1,6 +1,6 @@
 <template>
   <div class="bg-surface-50 dark:bg-surface-950 px-6 py-20 md:px-12 lg:px-20">
-    <div class="bg-surface-0 dark:bg-surface-900 p-6 shadow rounded-border w-full lg:w-6/12 mx-auto">
+    <div class="bg-surface-0 dark:bg-surface-900 p-6 shadow rounded-border w-full lg:w-6/12 mx-auto mt-16">
       <div class="text-center mb-8">
         <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">{{ formTitle }}</div>
         <span

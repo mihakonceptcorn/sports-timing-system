@@ -16,7 +16,6 @@
           @click.prevent="$router.push({name: 'competition-preview', params: { id: $route.params.id } })"
           label="Go back"
           icon="pi pi-arrow-left"
-          class="mr-6"
           severity="warn"
         />
       </div>
