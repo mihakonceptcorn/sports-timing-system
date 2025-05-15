@@ -30,7 +30,7 @@
         class="mt-6"
       />
 
-      <Dialog v-model:visible="visible" modal header="Add competitor" :style="{ width: '25rem' }">
+      <Dialog v-model:visible="visible" modal header="Add competitor" :style="{ width: '25rem' }" class="mt-27">
         <div class="flex flex-col gap-0.5">
           <label for="name">Name</label>
           <InputText v-model="formData.name" id="name" placeholder="Name" />

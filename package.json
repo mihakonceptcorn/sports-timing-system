@@ -6,9 +6,18 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "ionic:build": "npm run build",
+    "ionic:serve": "vite dev --host"
   },
   "dependencies": {
+    "@capacitor/android": "7.2.0",
+    "@capacitor/app": "7.0.1",
+    "@capacitor/cli": "7.2.0",
+    "@capacitor/core": "7.2.0",
+    "@capacitor/haptics": "7.0.1",
+    "@capacitor/keyboard": "7.0.1",
+    "@capacitor/status-bar": "7.0.1",
     "@fullcalendar/core": "^6.1.17",
     "@fullcalendar/daygrid": "^6.1.17",
     "@fullcalendar/vue3": "^6.1.17",

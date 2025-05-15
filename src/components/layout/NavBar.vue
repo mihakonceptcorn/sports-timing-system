@@ -59,7 +59,7 @@ const authStore = useAuthStore()
 
 const target = useTemplateRef('menu')
 
-onClickOutside(target, event => {
+onClickOutside(target, () => {
   const layoutWrapper = document.querySelector('.layout-wrapper')
   if (window.innerWidth <= 991) {
     layoutWrapper.classList.remove('active-m-sidebar')

@@ -6,7 +6,7 @@
         v-model:selection="selectedCompetitions"
         :value="competitionsStore.competitions"
         dataKey="id"
-        tableStyle="min-width: 50rem"
+        tableStyle="min-width: 15rem"
       >
         <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
         <Column field="id" header="Id">

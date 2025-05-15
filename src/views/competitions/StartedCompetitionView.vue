@@ -1,8 +1,7 @@
 <template>
   <div
-    :class="{'full': isFullscreen}"
     ref="fullscreen"
-    class="started-competition w-full"
+    class="started-competition w-full mt-2"
   >
     <Button
       label="Go back"
@@ -11,14 +10,13 @@
       size="small"
       class="mr-2"
     />
-    <Button label="Full screen" @click.prevent="toggleFullScreen" size="small"/>
 
     <Divider />
 
-    <div class="flex justify-center">
+    <div v-if="timerStore.timers.length" class="flex justify-center">
       <div
-        v-if="timerStore.timers.length"
         v-for="timer in timerStore.timers"
+        :key="timer.id"
         class="flex text-7xl justify-center items-center timer-item m-10"
       >
         {{ competitorsStore.competitors.filter(c => c.id === timer.competitorId)[0].competitorNumber }}
@@ -30,6 +28,7 @@
     <div class="mt-10 flex">
       <Button
         v-for="competitor in competitorsStore.competitors.filter(c => c.started === false).reverse()"
+        :key="competitor.id"
         @click="createTimer(competitor)"
         :label="competitor.name + ' -- ' + competitor.competitorNumber"
         :fluid="false"
@@ -44,20 +43,12 @@
 <script setup>
 import { useCompetitorsStore } from '@/stores/competitors.js'
 import { useTimersStore } from '@/stores/timers.js'
-import { onMounted, useTemplateRef } from 'vue'
-import { useFullscreen } from '@vueuse/core'
+import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
 const competitorsStore = useCompetitorsStore()
 const timerStore = useTimersStore()
 const route = useRoute()
-
-const el = useTemplateRef('fullscreen')
-const { isFullscreen, enter, exit, toggle } = useFullscreen(el)
-
-const toggleFullScreen = () => {
-  toggle()
-}
 
 const createTimer = (competitor) => {
   let i = 0;
@@ -65,6 +56,8 @@ const createTimer = (competitor) => {
   const beeper = setInterval(() => {
     const activeBtn = document.querySelector('.start-timer-button:last-child')
     const activeBtnLabel = activeBtn.querySelector('.p-button-label')
+
+    const timestamp = Date.now()
 
     switch (i) {
       case 0:
@@ -77,7 +70,6 @@ const createTimer = (competitor) => {
         activeBtnLabel.innerText = '1'
         break
       case 3:
-        const timestamp = Date.now()
         timerStore.createTimer(route.params.id, route.params.stageId, competitor.id, competitor.competitorNumber)
         competitorsStore.updateStartTime(competitor.id, timestamp)
         activeBtnLabel.innerText = 'GO!!!'

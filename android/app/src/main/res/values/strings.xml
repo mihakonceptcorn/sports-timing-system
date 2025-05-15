@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">sports-timing-system</string>
+    <string name="title_activity_main">sports-timing-system</string>
+    <string name="package_name">sports.timing.system</string>
+    <string name="custom_url_scheme">sports.timing.system</string>
+</resources>
