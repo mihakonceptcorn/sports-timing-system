@@ -11,6 +11,7 @@ import TimekeepingView from '@/views/competitions/TimekeepingView.vue'
 import TimekeepingCompetitionView from '@/views/competitions/TimekeepingCompetitionView.vue'
 import StartedCompetitionView from '@/views/competitions/StartedCompetitionView.vue'
 import PreviewStageView from '@/views/competitions/PreviewStageView.vue'
+import EditCompetitionView from '@/views/competitions/EditCompetitionView.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -49,6 +50,11 @@ const router = createRouter({
           path: 'competition/:id',
           name: 'competition-preview',
           component: PreviewCompetitionView
+        },
+        {
+          path: 'competition/:id/edit',
+          name: 'competition-edit',
+          component: EditCompetitionView
         },
         {
           path: 'competition/:id/:stageId',

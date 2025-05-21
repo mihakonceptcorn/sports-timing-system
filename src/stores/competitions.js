@@ -34,7 +34,7 @@ export const useCompetitionsStore = defineStore('competitions', {
       getCompetitionsSnapshot = onSnapshot(competitionsCollectionQuery, (querySnapshot) => {
         let competitions = []
         querySnapshot.forEach((doc) => {
-          let note = {
+          let comp = {
             id: doc.id,
             name: doc.data().name,
             stages: doc.data().stages,
@@ -44,15 +44,12 @@ export const useCompetitionsStore = defineStore('competitions', {
             location: doc.data().location,
             description: doc.data().description,
           }
-          competitions.push(note)
+          competitions.push(comp)
         });
         this.competitions = competitions
       }, error => {
         console.log('error.message: ', error.message)
       });
-
-
-
     },
     async createCompetition(competitionData) {
       const payload = {
@@ -68,12 +65,28 @@ export const useCompetitionsStore = defineStore('competitions', {
 
       await addDoc(competitionsCollectionRef, payload)
     },
+    async updateCompetition(competitionData) {
+      const payload = {
+        name: competitionData.name,
+        date: competitionData.date.getTime(),
+        stages: competitionData.stages,
+        country: competitionData.country,
+        city: competitionData.city,
+        location: competitionData.location,
+        description: competitionData.description,
+        owner: storeAuth.user.id,
+      }
+
+      await updateDoc(doc(competitionsCollectionRef, competitionData.id), payload);
+    },
     async getCompetitionById(id) {
       const docRef = doc(db, 'competitions', id)
       const docSnap = await getDoc(docRef)
 
       if (docSnap.exists()) {
-        return docSnap.data()
+        const competition = docSnap.data()
+        competition.id = docSnap.id
+        return competition
       } else {
         console.log("No such document!")
       }

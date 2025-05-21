@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card class="relative">
     <template #content>
       <Button
         @click.prevent="$router.push({name: 'competitions'})"
@@ -9,6 +9,8 @@
       />
 
       <h3 class="text-xl" v-if="competition">{{ competition.name }}</h3>
+
+      <SpeedDial :model="actions" direction="down" class="absolute! top-4 right-4" />
 
       <Tabs value="0">
         <TabList>
@@ -74,13 +76,14 @@
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted, reactive } from 'vue';
 import { useCompetitionsStore } from '@/stores/competitions.js'
 import { useStagesStore } from '@/stores/stages.js'
 import StagesView from '@/views/competitions/StagesView.vue'
 
 const route = useRoute()
+const router = useRouter()
 const competitionsStore = useCompetitionsStore()
 const stagesStore = useStagesStore()
 
@@ -91,6 +94,22 @@ const stageData = reactive({
   number: 1,
   name: ''
 })
+const actions = ref([
+  {
+    label: 'Edit',
+    icon: 'pi pi-pencil',
+    command: () => {
+      router.push({ name: 'competition-edit', params: { id: route.params.id } })
+    }
+  },
+  {
+    label: 'Delete',
+    icon: 'pi pi-trash',
+    command: () => {
+      console.log('Delete');
+    }
+  }
+])
 
 onMounted(async () => {
   competition.value = await competitionsStore.getCompetitionById(route.params.id)

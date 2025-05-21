@@ -20,14 +20,26 @@
           </template>
         </Column>
         <Column field="name" header="Name"></Column>
-        <Column field="date" header="date">
+        <Column field="date" header="Date">
           <template #body="slotProps">
             {{ getDate(slotProps.data.date) }}
           </template>
         </Column>
-        <Column field="country" header="country"></Column>
-        <Column field="city" header="city"></Column>
-        <Column field="location" header="location"></Column>
+        <Column field="country" header="Country"></Column>
+        <Column field="city" header="City"></Column>
+        <Column field="location" header="Location"></Column>
+        <Column field="action" header="Actions">
+          <template #body="slotProps">
+            <Button
+              icon="pi pi-pencil"
+              rounded
+              aria-label="Filter"
+              variant="outlined"
+              size="small"
+              @click.prevent="goToEdit(slotProps.data.id)"
+            />
+          </template>
+        </Column>
       </DataTable>
     </template>
   </Card>
@@ -55,6 +67,10 @@ const getDate = (timestamp) => {
 }
 const goToPreview = (id) => {
   router.push({name: 'competition-preview', params: { id }})
+}
+
+const goToEdit = (id) => {
+  router.push({name: 'competition-edit', params: { id }})
 }
 
 </script>
