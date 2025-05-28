@@ -55,7 +55,6 @@ export const useCompetitionsStore = defineStore('competitions', {
       const payload = {
         name: competitionData.name,
         date: competitionData.date.getTime(),
-        stages: competitionData.stages,
         country: competitionData.country,
         city: competitionData.city,
         location: competitionData.location,
