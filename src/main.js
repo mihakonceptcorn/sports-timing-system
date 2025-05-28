@@ -1,5 +1,7 @@
 import { createApp, markRaw } from 'vue'
 import { createPinia } from 'pinia'
+import ConfirmationService from 'primevue/confirmationservice'
+import ToastService from 'primevue/toastservice'
 import i18n from './i18n'
 import PrimeVue from 'primevue/config'
 import Ripple from 'primevue/ripple'
@@ -19,6 +21,8 @@ pinia.use(({ store }) => {
   store.router = markRaw(router)
 })
 
+app.use(ConfirmationService)
+app.use(ToastService)
 app.use(PrimeVue, {
   theme: {
     preset: Aura,

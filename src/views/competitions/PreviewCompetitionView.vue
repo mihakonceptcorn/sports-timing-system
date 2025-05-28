@@ -71,11 +71,16 @@
           <Button type="button" label="Create" @click="createStage"></Button>
         </div>
       </Dialog>
+
+      <Toast position="bottom-right"/>
+      <ConfirmDialog />
     </template>
   </Card>
 </template>
 
 <script setup>
+import { useConfirm } from 'primevue/useconfirm'
+import { useToast } from 'primevue/usetoast'
 import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted, reactive } from 'vue';
 import { useCompetitionsStore } from '@/stores/competitions.js'
@@ -86,6 +91,8 @@ const route = useRoute()
 const router = useRouter()
 const competitionsStore = useCompetitionsStore()
 const stagesStore = useStagesStore()
+const confirm = useConfirm()
+const toast = useToast()
 
 const competition = ref(null)
 const email = ref('')
@@ -94,6 +101,33 @@ const stageData = reactive({
   number: 1,
   name: ''
 })
+
+const confirmDialog = () => {
+  confirm.require({
+    message: `Do you want to delete this competition?`,
+    header: 'Danger Zone',
+    icon: 'pi pi-info-circle',
+    rejectLabel: 'Cancel',
+    rejectProps: {
+      label: 'Cancel',
+      severity: 'secondary',
+      outlined: true
+    },
+    acceptProps: {
+      label: 'Delete',
+      severity: 'danger',
+    },
+    accept: () => {
+      competitionsStore.deleteCompetition(route.params.id)
+      router.push({name: 'competitions'})
+      toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted', life: 3000 })
+    },
+    reject: () => {
+      toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 })
+    },
+  });
+};
+
 const actions = ref([
   {
     label: 'Edit',
@@ -106,7 +140,7 @@ const actions = ref([
     label: 'Delete',
     icon: 'pi pi-trash',
     command: () => {
-      console.log('Delete');
+      confirmDialog()
     }
   }
 ])

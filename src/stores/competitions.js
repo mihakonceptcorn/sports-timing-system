@@ -78,6 +78,9 @@ export const useCompetitionsStore = defineStore('competitions', {
 
       await updateDoc(doc(competitionsCollectionRef, competitionData.id), payload);
     },
+    async deleteCompetition(id) {
+      await deleteDoc(doc(competitionsCollectionRef, id));
+    },
     async getCompetitionById(id) {
       const docRef = doc(db, 'competitions', id)
       const docSnap = await getDoc(docRef)
