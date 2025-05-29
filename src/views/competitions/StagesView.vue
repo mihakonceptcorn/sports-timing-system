@@ -19,6 +19,30 @@
       </Column>
       <Column field="number" header="Number"></Column>
       <Column field="name" header="Name"></Column>
+      <Column field="action" header="Actions">
+        <template #body="slotProps">
+          <div style="min-width: 72px">
+            <Button
+              icon="pi pi-pencil"
+              rounded
+              aria-label="Filter"
+              variant="outlined"
+              size="small"
+              @click.prevent="goToEdit(slotProps.data.id)"
+            />
+            <Button
+              @click.prevent="confirmDialog(slotProps.data.id, slotProps.data.name)"
+              icon="pi pi-times"
+              rounded
+              aria-label="Filter"
+              variant="outlined"
+              size="small"
+              severity="danger"
+              class="ml-2"
+            />
+          </div>
+        </template>
+      </Column>
     </DataTable>
   </div>
 </template>
@@ -26,10 +50,52 @@
 <script setup>
 import { useStagesStore } from '@/stores/stages.js'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router';
+import { useConfirm } from 'primevue/useconfirm';
+import { useToast } from 'primevue/usetoast';
 
 const stagesStore = useStagesStore()
+const router = useRouter()
+const confirm = useConfirm()
+const toast = useToast()
 
 const selectedStages = ref();
+let deleteId = null
+
+const goToEdit = (id) => {
+
+}
+
+const confirmDialog = (id, name) => {
+  deleteId = id
+  confirm.require({
+    message: `Do you want to delete '${name}'?`,
+    header: 'Danger Zone',
+    icon: 'pi pi-info-circle',
+    rejectLabel: 'Cancel',
+    rejectProps: {
+      label: 'Cancel',
+      severity: 'secondary',
+      outlined: true
+    },
+    acceptProps: {
+      label: 'Delete',
+      severity: 'danger',
+    },
+    accept: () => {
+      stagesStore.deleteStage(deleteId)
+      toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted', life: 3000 })
+      deleteId = null
+    },
+    reject: () => {
+      toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 })
+      deleteId = null
+    },
+    onHide: () => {
+      deleteId = null
+    }
+  });
+};
 </script>
 
 <style scoped lang="scss">

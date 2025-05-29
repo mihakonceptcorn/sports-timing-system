@@ -7,7 +7,7 @@ import {
   query,
   orderBy,
   doc,
-  getDoc
+  getDoc, deleteDoc
 } from 'firebase/firestore';
 import { db } from '@/js/firebase'
 
@@ -50,6 +50,9 @@ export const useStagesStore = defineStore('stages', {
       }
 
       await addDoc(stagesCollectionRef, payload)
+    },
+    async deleteStage(id) {
+      await deleteDoc(doc(stagesCollectionRef, id));
     },
     async getStageById(id) {
       const docRef = doc(db, 'stages', id)
