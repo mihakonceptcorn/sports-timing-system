@@ -63,7 +63,7 @@ const selectedStages = ref();
 let deleteId = null
 
 const goToEdit = (id) => {
-
+  router.push({name: 'stage-edit', params: { stageId: id }})
 }
 
 const confirmDialog = (id, name) => {
