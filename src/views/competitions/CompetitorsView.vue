@@ -88,7 +88,7 @@ const getTime = (start, finish) => {
 }
 
 const goToEdit = (id) => {
-  // router.push({name: 'stage-edit', params: { stageId: id }})
+  router.push({name: 'competitor-edit', params: { competitorId: id }})
 }
 
 const confirmDialog = (id, name) => {

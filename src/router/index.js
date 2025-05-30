@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { useAuthStore } from '@/stores/auth.js'
 import HomeView from '@/views/HomeView.vue'
 import AuthView from '@/views/AuthView.vue'
 import AccountView from '@/views/AccountView.vue'
@@ -13,6 +12,7 @@ import StartedCompetitionView from '@/views/competitions/StartedCompetitionView.
 import PreviewStageView from '@/views/competitions/PreviewStageView.vue'
 import EditCompetitionView from '@/views/competitions/EditCompetitionView.vue'
 import EditStageView from '@/views/competitions/EditStageView.vue'
+import EditCompetitorView from '@/views/competitions/EditCompetitorView.vue';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -66,6 +66,11 @@ const router = createRouter({
           path: 'competition/:id/:stageId/edit',
           name: 'stage-edit',
           component: EditStageView
+        },
+        {
+          path: 'competition/:id/:stageId/:competitorId',
+          name: 'competitor-edit',
+          component: EditCompetitorView
         },
         {
           path: 'competition/:id/:stageId/started',

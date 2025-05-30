@@ -43,6 +43,18 @@ export const useCompetitorsStore = defineStore('competitors', {
         console.log('error.message: ', error.message)
       });
     },
+    async getCompetitorById(id) {
+      const docRef = doc(db, 'competitors', id)
+      const docSnap = await getDoc(docRef)
+
+      if (docSnap.exists()) {
+        const competitor = docSnap.data()
+        competitor.id = docSnap.id
+        return competitor
+      } else {
+        console.log("No such document!")
+      }
+    },
     async addCompetitor(competitorData) {
       const payload = {
         stageId: competitorData.stageId,
@@ -58,6 +70,20 @@ export const useCompetitorsStore = defineStore('competitors', {
       }
 
       await addDoc(competitorsCollectionRef, payload)
+    },
+    async updateCompetitor(competitorData) {
+      const payload = {
+        name: competitorData.name,
+        secondName: competitorData.secondName,
+        gender: competitorData.gender,
+        category: competitorData.category,
+        dob: competitorData.dob,
+        team: competitorData.team,
+        address: competitorData.address,
+        competitorNumber: competitorData.competitorNumber
+      }
+
+      await updateDoc(doc(competitorsCollectionRef, competitorData.id), payload);
     },
     async deleteCompetitor(id) {
       await deleteDoc(doc(competitorsCollectionRef, id));
