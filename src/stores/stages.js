@@ -7,7 +7,7 @@ import {
   query,
   orderBy,
   doc,
-  getDoc, deleteDoc
+  getDoc, deleteDoc, updateDoc
 } from 'firebase/firestore';
 import { db } from '@/js/firebase'
 
@@ -51,6 +51,14 @@ export const useStagesStore = defineStore('stages', {
 
       await addDoc(stagesCollectionRef, payload)
     },
+    async updateStage(stageData) {
+      const payload = {
+        name: stageData.name,
+        number: stageData.number
+      }
+
+      await updateDoc(doc(stagesCollectionRef, stageData.id), payload);
+    },
     async deleteStage(id) {
       await deleteDoc(doc(stagesCollectionRef, id));
     },
@@ -59,7 +67,9 @@ export const useStagesStore = defineStore('stages', {
       const docSnap = await getDoc(docRef)
 
       if (docSnap.exists()) {
-        return docSnap.data()
+        const stage = docSnap.data()
+        stage.id = docSnap.id
+        return stage
       } else {
         console.log("No such document!")
       }
