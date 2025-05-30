@@ -80,7 +80,7 @@ const competitor = ref(null)
 
 const update = async () => {
   await competitorsStore.updateCompetitor(competitor.value)
-  await router.push({ name: 'stage-preview', params: { id: route.params.stageId } })
+  await router.push({ name: 'stage-preview', params: { id: route.params.id, stageId: route.params.stageId } })
 }
 
 onMounted(async () => {
