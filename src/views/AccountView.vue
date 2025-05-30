@@ -1,6 +1,6 @@
 <template>
   <div class="layout-sidebar bg-surface-0 dark:bg-surface-900">
-    <Menu :model="items" class="mt-4" />
+    <Menu :model="items" class="mt-4 pb-4" />
   </div>
   <div class="layout-main-container">
     <div>
@@ -63,10 +63,6 @@ const items = computed(() => [
       {
         label: 'Settings',
         icon: 'pi pi-cog'
-      },
-      {
-        label: 'Logout',
-        icon: 'pi pi-sign-out'
       }
     ]
   }
