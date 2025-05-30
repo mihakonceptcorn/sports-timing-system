@@ -50,16 +50,16 @@
 <script setup>
 import { useStagesStore } from '@/stores/stages.js'
 import { ref } from 'vue'
-import { useRouter } from 'vue-router';
-import { useConfirm } from 'primevue/useconfirm';
-import { useToast } from 'primevue/usetoast';
+import { useRouter } from 'vue-router'
+import { useConfirm } from 'primevue/useconfirm'
+import { useToast } from 'primevue/usetoast'
 
 const stagesStore = useStagesStore()
 const router = useRouter()
 const confirm = useConfirm()
 const toast = useToast()
 
-const selectedStages = ref();
+const selectedStages = ref()
 let deleteId = null
 
 const goToEdit = (id) => {
@@ -94,8 +94,8 @@ const confirmDialog = (id, name) => {
     onHide: () => {
       deleteId = null
     }
-  });
-};
+  })
+}
 </script>
 
 <style scoped lang="scss">

@@ -59,6 +59,9 @@ export const useCompetitorsStore = defineStore('competitors', {
 
       await addDoc(competitorsCollectionRef, payload)
     },
+    async deleteCompetitor(id) {
+      await deleteDoc(doc(competitorsCollectionRef, id));
+    },
     async updateStartTime(id, timestamp) {
       await updateDoc(doc(competitorsCollectionRef, id), {
         startTime: timestamp,
