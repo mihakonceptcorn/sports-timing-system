@@ -1,9 +1,10 @@
 <template>
   <div class="competitors mt-6" v-if="competitorsStore.competitors?.length">
     <DataTable
-      :value="competitorsStore.competitors"
+      :value="competitorsData"
       dataKey="id"
       tableStyle="min-width: 15rem"
+      removableSort
     >
       <Column field="id" header="Id">
         <template #body="slotProps">
@@ -20,14 +21,10 @@
       <Column field="category" header="Category"></Column>
       <Column field="team" header="Team"></Column>
       <Column field="competitorNumber" header="Number"></Column>
-      <Column field="time" header="Time">
+      <Column field="time" header="Time"></Column>
+      <Column field="position" header="Position" :sortable="true">
         <template #body="slotProps">
-          {{ getTime(slotProps.data.startTime, slotProps.data.finishTime) }}
-        </template>
-      </Column>
-      <Column field="position" header="Position">
-        <template #body="slotProps">
-          <div class="text-center">{{ getPosition(slotProps.data.id) }}</div>
+          {{ slotProps.data.position ? slotProps.data.position : '--' }}
         </template>
       </Column>
       <Column field="action" header="Actions">
@@ -62,6 +59,7 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useCompetitorsStore } from '@/stores/competitors.js'
 import { useRouter } from 'vue-router'
 import { useConfirm } from 'primevue/useconfirm'
@@ -73,6 +71,20 @@ const confirm = useConfirm()
 const toast = useToast()
 
 let deleteId = null
+
+const competitorsData = computed(() => {
+  const competitors = competitorsStore.competitors
+
+  competitors.forEach(competitor => {
+    competitor.time = getTime(competitor.startTime, competitor.finishTime)
+  })
+
+  competitors.forEach(competitor => {
+    competitor.position = getPosition(competitor.id)
+  })
+
+  return competitors
+})
 
 const getTime = (start, finish) => {
   if (!start || !finish) return  '--'
@@ -101,7 +113,7 @@ const getPosition = (id) => {
 
   const idx = competitorsMap.findIndex(c => c.id === id)
 
-  return (idx !== -1) ? idx + 1 : '--'
+  return (idx !== -1) ? idx + 1 : null
 }
 
 const goToEdit = (id) => {
