@@ -1,7 +1,7 @@
 <template>
   <div
     :class="{'full': isFullscreen}"
-    class="timekeepingCompetition w-full"
+    class="timekeepingCompetition w-full h-full"
     ref="fullscreen"
   >
     <h3 class="text-3xl" >Timekeeping</h3>
@@ -9,12 +9,12 @@
     <div>
       Comp ---- {{ $route.params.id }}
 
-      <div class="flex justify-center w-full">
+      <div v-if="timerStore.timers.length" class="flex justify-center absolute bottom-0 right-0">
         <div
           @click="stopTimer(timer)"
-          v-if="timerStore.timers.length"
-          v-for="timer in timerStore.timers"
-          class="flex text-7xl justify-center items-center timer-item m-10 w-full"
+          v-for="timer in timerStore.timers.reverse()"
+          :key="timer.id"
+          class="flex text-7xl justify-center items-center timer-item m-10 w-full relative"
         >
           {{ timer.number }}
         </div>
@@ -66,7 +66,6 @@ onMounted(async () => {
   background-color: green;
   color: white;
   cursor: pointer;
-  position: absolute;
   bottom: 40px;
 }
 </style>
