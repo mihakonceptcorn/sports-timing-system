@@ -1,12 +1,10 @@
 <template>
   <div class="competitors mt-6" v-if="competitorsStore.competitors?.length">
     <DataTable
-      v-model:selection="selectedCompetitors"
       :value="competitorsStore.competitors"
       dataKey="id"
       tableStyle="min-width: 15rem"
     >
-      <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
       <Column field="id" header="Id">
         <template #body="slotProps">
           <a
@@ -65,7 +63,6 @@
 
 <script setup>
 import { useCompetitorsStore } from '@/stores/competitors.js'
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
@@ -75,7 +72,6 @@ const router = useRouter()
 const confirm = useConfirm()
 const toast = useToast()
 
-const selectedCompetitors = ref()
 let deleteId = null
 
 const getTime = (start, finish) => {
