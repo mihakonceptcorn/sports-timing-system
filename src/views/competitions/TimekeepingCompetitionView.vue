@@ -12,7 +12,7 @@
       <div v-if="timerStore.timers.length" class="flex justify-center absolute bottom-0 right-0">
         <div
           @click="stopTimer(timer)"
-          v-for="timer in timerStore.timers.reverse()"
+          v-for="timer in timerStore.timers"
           :key="timer.id"
           class="flex text-7xl justify-center items-center timer-item m-10 w-full relative"
         >
