@@ -31,6 +31,7 @@ const calendarOptions = reactive(
   {
     plugins: [dayGridPlugin],
     initialView: 'dayGridMonth',
+    height: 600,
     weekends: true,
     events: events
   }
