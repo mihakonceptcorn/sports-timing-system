@@ -1,5 +1,5 @@
 <template>
-  <div class="competitors mt-6">
+  <div class="competitors mt-6" v-if="competitorsStore.competitors?.length">
     <DataTable
       v-model:selection="selectedCompetitors"
       :value="competitorsStore.competitors"
@@ -27,7 +27,11 @@
           {{ getTime(slotProps.data.startTime, slotProps.data.finishTime) }}
         </template>
       </Column>
-      <Column field="position" header="Position"></Column>
+      <Column field="position" header="Position">
+        <template #body="slotProps">
+          <div class="text-center">{{ getPosition(slotProps.data.id) }}</div>
+        </template>
+      </Column>
       <Column field="action" header="Actions">
         <template #body="slotProps">
           <div style="min-width: 72px">
@@ -85,6 +89,23 @@ const getTime = (start, finish) => {
   const hundredths = Math.floor((diff % 1000) / 10);
 
   return  hours + ':' + minutes + ':' + seconds + '.' + hundredths
+}
+
+const getPosition = (id) => {
+  let competitorsMap = competitorsStore.competitors.map(c => {
+    return {
+      id: c.id,
+      time: c.finishTime - c.startTime
+    }
+  })
+
+  competitorsMap = competitorsMap.filter(c => !isNaN(c.time))
+
+  competitorsMap.sort((a, b) => a.time - b.time)
+
+  const idx = competitorsMap.findIndex(c => c.id === id)
+
+  return (idx !== -1) ? idx + 1 : '--'
 }
 
 const goToEdit = (id) => {
