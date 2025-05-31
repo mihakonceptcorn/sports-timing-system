@@ -45,7 +45,15 @@
       </Tabs>
 
       <div class="mt-6 flex gap-2 flex-wrap" v-if="competition">
-        <div v-if="competition.timekeeper">Timekeeper: {{ competition.timekeeper }}</div>
+        <div v-if="competition.timekeeper" class="flex items-center gap-4">
+          <div>Timekeeper: {{ competition.timekeeper }}</div>
+          <Button
+            @click.prevent="removeTimekeeper"
+            label="Remove Timekeeper"
+            icon="pi pi-user-minus"
+            severity="danger"
+          />
+        </div>
         <div v-else>
           <InputText name="email" type="text" placeholder="Email" v-model="email" class="mr-1"/>
           <Button
@@ -155,8 +163,14 @@ const createStage = () => {
   stagesStore.createStage(route.params.id, stageData.number, stageData.name)
 }
 
-const addTimekeeper = () => {
-  competitionsStore.addTimekeeper(route.params.id, email.value)
+const addTimekeeper = async () => {
+  await competitionsStore.addTimekeeper(route.params.id, email.value)
+  competition.value = await competitionsStore.getCompetitionById(route.params.id)
+}
+
+const removeTimekeeper = async () => {
+  await competitionsStore.removeTimekeeper(route.params.id)
+  competition.value = await competitionsStore.getCompetitionById(route.params.id)
 }
 
 </script>

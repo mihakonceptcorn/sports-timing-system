@@ -98,6 +98,11 @@ export const useCompetitionsStore = defineStore('competitions', {
         timekeeper: email
       });
     },
+    async removeTimekeeper(competitionId) {
+      await updateDoc(doc(competitionsCollectionRef, competitionId), {
+        timekeeper: null
+      });
+    },
     getTimekeepingCompetitions() {
       const timekeepingCollectionQuery = query(
         competitionsCollectionRef,
