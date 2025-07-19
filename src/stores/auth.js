@@ -1,5 +1,12 @@
 import { defineStore } from 'pinia'
-import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signOut,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithPopup,
+  GoogleAuthProvider
+} from "firebase/auth";
 import { auth } from '@/js/firebase'
 import { useCompetitionsStore } from '@/stores/competitions.js'
 
@@ -33,6 +40,18 @@ export const useAuthStore = defineStore('authStore', {
         .catch((error) => {
           console.log('error message: ', error.message)
         })
+    },
+    loginUserWithGoogle() {
+      const provider = new GoogleAuthProvider()
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          // const credential = GoogleAuthProvider.credentialFromResult(result);
+          // const user = result.user;
+          this.router.push({ name: 'dashboard' })
+        })
+        .catch((error) => {
+          console.log('error message: ', error.message)
+        });
     },
     loginUser(credentials) {
       signInWithEmailAndPassword(auth, credentials.email, credentials.password)

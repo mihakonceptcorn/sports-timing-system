@@ -89,6 +89,67 @@
       </div>
       </template>
     </Card>
+
+    <Card class="mb-6">
+      <template #content>
+        <div class="bg-surface-0 dark:bg-surface-950 px-6 py-20 md:px-12 lg:px-20">
+          <div class="text-surface-700 dark:text-surface-100">
+            <div class="text-surface-900 dark:text-surface-0 font-bold text-4xl leading-tight text-center mb-6">
+              {{ $t('home.why.title') }}
+            </div>
+            <div class="text-surface-700 dark:text-surface-100 text-xl leading-normal">
+              ✅ No special hardware required — just smartphones <br>
+              ✅ Runs in your mobile browser — no app installs <br>
+              ✅ Real-time timing and results <br>
+              ✅ Perfect for small or local MTB and enduro events <br>
+              ✅ Easy to use for volunteers and small teams <br>
+              <div class="mt-6">
+                Whether you're organizing a local downhill race, an enduro series, or time-trial training sessions, Smart Timing gives you all the tools you need — without breaking the budget.
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </Card>
+
+    <Card class="mb-6">
+      <template #content>
+        <div class="bg-surface-0 dark:bg-surface-950 px-6 py-20 md:px-12 lg:px-20">
+          <div class="text-surface-700 dark:text-surface-100">
+            <div class="text-surface-900 dark:text-surface-0 font-bold text-4xl leading-tight text-center mb-6">
+              Ideal for:
+            </div>
+            <div class="text-surface-700 dark:text-surface-100 text-xl leading-normal">
+              <ul>
+                <li>🚵 Mountain bike races (MTB)</li>
+                <li>⏱️ Enduro and time trial stages</li>
+                <li>🏃 Individual-start events</li>
+                <li>🧪 Practice sessions or test races</li>
+                <li>👨‍👩‍👧‍👦 Community sports and youth events</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </template>
+    </Card>
+
+    <Card class="mb-6">
+      <template #content>
+        <div class="bg-surface-0 dark:bg-surface-950 px-6 py-20 md:px-12 lg:px-20">
+          <div class="text-surface-700 dark:text-surface-100">
+            <div class="text-surface-900 dark:text-surface-0 font-bold text-4xl leading-tight text-center mb-6">
+              Get Started in Minutes
+            </div>
+            <div class="text-surface-700 dark:text-surface-100 text-xl leading-normal">
+              <p>Smart Timing is the easiest way to bring accurate race timing to your event — no expensive RFID chips, no complex setup, no learning curve. Sign up, invite your team, and start your first race in just a few clicks.</p>
+              <div class="text-center mt-6">
+                <Button label="Join Now" size="small" @click.prevent="$router.push({name: 'auth'})"/> — it’s fast, simple, and built for grassroots racing.
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </Card>
   </div>
 </template>
 

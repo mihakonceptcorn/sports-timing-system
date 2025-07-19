@@ -31,7 +31,6 @@
           v-model="credentials.password"
           id="password1"
           type="password"
-          placehoder="Password"
           class="w-full mb-4"
         />
 
@@ -40,6 +39,16 @@
           :label="formButton"
           icon="pi pi-user !text-xl !leading-none"
           class="w-full"
+        />
+
+        <div class="text mt-2 mb-2 text-center">Or</div>
+
+        <Button
+          @click="onGoogleClick"
+          :label="'Login with Google'"
+          icon="pi pi-google !text-xl !leading-none"
+          class="w-full"
+          severity="info"
         />
       </div>
     </div>
@@ -87,6 +96,10 @@ const onSubmit = () => {
       authStore.loginUser(credentials)
     }
   }
+}
+
+const onGoogleClick = () => {
+  authStore.loginUserWithGoogle()
 }
 </script>
 

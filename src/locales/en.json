@@ -23,9 +23,13 @@
       "p6description": "All results are automatically saved in the participants' table for each stage."
     },
     "welcome": {
-      "title": "Smart Timing for MTB, Enduro, or Any Race with Individual Starts",
-      "description": "Run local downhill, enduro, or similar time-trial events using just smartphones. Start and stop timers remotely, manage participants, and get instant results — no expensive equipment needed.",
+      "title": "Smart Timing for MTB, Enduro & Time-Trial Races — No Expensive Gear Needed",
+      "description": "Looking for a reliable and affordable way to time mountain bike races, enduro stages, or any race with individual starts? Say goodbye to expensive timing systems and hello to Smart Timing — the easiest way to run local races using just smartphones. Whether you're timing mini-downhill, enduro, or trail-running events, our tool gives you full control of your race in minutes.",
       "join": "Join Now!"
+    },
+    "why": {
+      "title": "Why Choose Smart Timing?",
+      "description": ""
     }
   }
 }
