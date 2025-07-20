@@ -6,7 +6,7 @@
         <div class="bg-surface-0 dark:bg-surface-950 px-6 py-20 md:px-12 lg:px-20">
           <div class="text-surface-700 dark:text-surface-100 text-center flex flex-col items-center gap-4">
             <div class="text-primary font-bold text-lg leading-tight">
-              Sports Timing System
+              <h1>Sports Timing System</h1>
             </div>
             <div class="text-surface-900 dark:text-surface-0 font-bold text-4xl leading-tight">
               {{ $t('home.welcome.title') }}
@@ -26,7 +26,7 @@
         <div class="flex flex-col gap-6">
           <div class="flex flex-col items-center gap-4">
             <div class="font-bold text-3xl leading-tight">
-              <span class="text-surface-900 dark:text-surface-0">{{ $t('home.hiw.title') }}</span>
+              <h2 class="text-surface-900 dark:text-surface-0">{{ $t('home.hiw.title') }}</h2>
             </div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -95,7 +95,7 @@
         <div class="bg-surface-0 dark:bg-surface-950 px-6 py-20 md:px-12 lg:px-20">
           <div class="text-surface-700 dark:text-surface-100">
             <div class="text-surface-900 dark:text-surface-0 font-bold text-4xl leading-tight text-center mb-6">
-              {{ $t('home.why.title') }}
+              <h2>{{ $t('home.why.title') }}</h2>
             </div>
             <div class="text-surface-700 dark:text-surface-100 text-xl leading-normal">
               ✅ No special hardware required — just smartphones <br>
@@ -157,10 +157,10 @@
           <div class="relative flex-1 z-20 flex items-center justify-center">
             <div class="flex items-center justify-center h-full">
               <div class="w-full max-w-2xl px-6 py-12 lg:p-12 xl:p-16 text-center lg:text-left">
-                <h1 class="text-4xl xl:text-5xl font-bold text-surface-0 lg:text-surface-900 dark:text-surface-0 mb-6 !leading-tight">
+                <h2 class="text-4xl xl:text-5xl font-bold text-surface-0 lg:text-surface-900 dark:text-surface-0 mb-6 !leading-tight">
                   <span class="block">Founder</span>
                   <span class="block text-primary">Mykhailo Fedorenko</span>
-                </h1>
+                </h2>
 
                 <p class="text-surface-0/90 lg:text-surface-700 dark:text-surface-200 text-xl leading-normal mb-8 max-w-xl lg:max-w-none">
                   Hi! I’m a mountain biking enthusiast from Ukraine, passionate about mini downhill and mini enduro. I’ve taken part in many amateur races and know how much better events feel when there’s proper timekeeping — but professional systems are often out of reach.
