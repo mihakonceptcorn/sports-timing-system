@@ -150,10 +150,66 @@
         </div>
       </template>
     </Card>
+
+    <Card class="mb-6">
+      <template #content>
+        <div class="flex lg:flex lg:flex-row flex-col justify-center md:justify-normal h-full flex-1 relative">
+          <div class="relative flex-1 z-20 flex items-center justify-center">
+            <div class="flex items-center justify-center h-full">
+              <div class="w-full max-w-2xl px-6 py-12 lg:p-12 xl:p-16 text-center lg:text-left">
+                <h1 class="text-4xl xl:text-5xl font-bold text-surface-0 lg:text-surface-900 dark:text-surface-0 mb-6 !leading-tight">
+                  <span class="block">Founder</span>
+                  <span class="block text-primary">Mykhailo Fedorenko</span>
+                </h1>
+
+                <p class="text-surface-0/90 lg:text-surface-700 dark:text-surface-200 text-xl leading-normal mb-8 max-w-xl lg:max-w-none">
+                  Hi! I’m a mountain biking enthusiast from Ukraine, passionate about mini downhill and mini enduro. I’ve taken part in many amateur races and know how much better events feel when there’s proper timekeeping — but professional systems are often out of reach.
+                </p>
+                <p class="text-surface-0/90 lg:text-surface-700 dark:text-surface-200 text-xl leading-normal mb-8 max-w-xl lg:max-w-none">
+                  Not everyone has access to expensive timing equipment, and sometimes you just want to measure your runs during training or organize a small local race with friends.
+                </p>
+                <p class="text-surface-0/90 lg:text-surface-700 dark:text-surface-200 text-xl leading-normal mb-8 max-w-xl lg:max-w-none">
+                  As a programmer and rider, I decided to build an accessible timing system that anyone can use with just a two smartphones — no special hardware required.
+                </p>
+
+                <div class="flex items-center gap-4 justify-center lg:justify-start">
+                  <Button
+                    @click.prevent="openInstagram"
+                    icon="pi pi-instagram"
+                    severity="secondary"
+                    rounded
+                    aria-label="Bookmark"
+                  />
+                  <Button
+                    @click.prevent="openLinkedin"
+                    icon="pi pi-linkedin"
+                    severity="secondary"
+                    rounded
+                    aria-label="Bookmark"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="absolute lg:relative inset-0 lg:inset-auto flex-1">
+            <div class="absolute lg:hidden inset-0 bg-surface-900/60 dark:bg-surface-900/80 z-10" />
+            <img src="../assets/images/founder.jpg" alt="hero-1" class="h-full w-full object-cover xl:[clip-path:polygon(12%_0,100%_0%,100%_100%,0_100%)]" />
+          </div>
+        </div>
+      </template>
+    </Card>
   </div>
 </template>
 
 <script setup>
+const openInstagram = () => {
+  window.open("https://www.instagram.com/mihakonceptcorn", "_blank")
+}
+
+const openLinkedin = () => {
+  window.open("https://www.linkedin.com/in/mihailfedorenko/", "_blank")
+}
 </script>
 
 <style lang="scss">
