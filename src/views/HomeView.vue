@@ -187,6 +187,18 @@
                     rounded
                     aria-label="Bookmark"
                   />
+                  <Button
+                    @click.prevent="openStrava"
+                    severity="secondary"
+                    rounded
+                    icon="pi"
+                  >
+                    <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="strava-icon">
+                      <path d="M24 48C37.2548 48 48 37.2548 48 24C48 10.7452 37.2548 0 24 0C10.7452 0 0 10.7452 0 24C0 37.2548 10.7452 48 24 48Z" fill="#F04F28"/>
+                      <path d="M22.1701 20.0804L25.519 26.6904H30.4415L22.1701 10.3627L13.9 26.6904H18.8236L22.1701 20.0804Z" fill="white"/>
+                      <path d="M27.9495 31.7029L25.457 26.785H21.7935L27.9495 38.9339L34.1012 26.785H30.4404L27.9495 31.7029Z" fill="#FFA780"/>
+                    </svg>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -210,8 +222,14 @@ const openInstagram = () => {
 const openLinkedin = () => {
   window.open("https://www.linkedin.com/in/mihailfedorenko/", "_blank")
 }
+
+const openStrava = () => {
+  window.open("https://www.strava.com/athletes/2737135", "_blank")
+}
 </script>
 
-<style lang="scss">
-
+<style lang="scss" scoped>
+.strava-icon {
+  filter: grayscale(1);
+}
 </style>
