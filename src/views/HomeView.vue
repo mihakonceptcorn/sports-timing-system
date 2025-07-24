@@ -98,13 +98,15 @@
               <h2>{{ $t('home.why.title') }}</h2>
             </div>
             <div class="text-surface-700 dark:text-surface-100 text-xl leading-normal">
-              ✅ No special hardware required — just smartphones <br>
-              ✅ Runs in your mobile browser — no app installs <br>
-              ✅ Real-time timing and results <br>
-              ✅ Perfect for small or local MTB and enduro events <br>
-              ✅ Easy to use for volunteers and small teams <br>
+              <div>
+                {{ $t('home.why.p1') }} <br/>
+                {{ $t('home.why.p2') }} <br/>
+                {{ $t('home.why.p3') }} <br/>
+                {{ $t('home.why.p4') }} <br/>
+                {{ $t('home.why.p5') }}
+              </div>
               <div class="mt-6">
-                Whether you're organizing a local downhill race, an enduro series, or time-trial training sessions, Smart Timing gives you all the tools you need — without breaking the budget.
+                {{ $t('home.why.end') }}
               </div>
             </div>
           </div>
@@ -117,15 +119,15 @@
         <div class="bg-surface-0 dark:bg-surface-950 px-6 py-20 md:px-12 lg:px-20">
           <div class="text-surface-700 dark:text-surface-100">
             <div class="text-surface-900 dark:text-surface-0 font-bold text-4xl leading-tight text-center mb-6">
-              Ideal for:
+              {{ $t('home.for.title') }}
             </div>
             <div class="text-surface-700 dark:text-surface-100 text-xl leading-normal">
               <ul>
-                <li>🚵 Mountain bike races (MTB)</li>
-                <li>⏱️ Enduro and time trial stages</li>
-                <li>🏃 Individual-start events</li>
-                <li>🧪 Practice sessions or test races</li>
-                <li>👨‍👩‍👧‍👦 Community sports and youth events</li>
+                <li>{{ $t('home.for.p1') }}</li>
+                <li>{{ $t('home.for.p2') }}</li>
+                <li>{{ $t('home.for.p3') }}</li>
+                <li>{{ $t('home.for.p4') }}</li>
+                <li>{{ $t('home.for.p5') }}</li>
               </ul>
             </div>
           </div>
@@ -138,12 +140,13 @@
         <div class="bg-surface-0 dark:bg-surface-950 px-6 py-20 md:px-12 lg:px-20">
           <div class="text-surface-700 dark:text-surface-100">
             <div class="text-surface-900 dark:text-surface-0 font-bold text-4xl leading-tight text-center mb-6">
-              Get Started in Minutes
+              {{ $t('home.getStarted.title') }}
             </div>
             <div class="text-surface-700 dark:text-surface-100 text-xl leading-normal">
-              <p>Smart Timing is the easiest way to bring accurate race timing to your event — no expensive RFID chips, no complex setup, no learning curve. Sign up, invite your team, and start your first race in just a few clicks.</p>
+              <p>{{ $t('home.getStarted.description') }}</p>
               <div class="text-center mt-6">
-                <Button label="Join Now" size="small" @click.prevent="$router.push({name: 'auth'})"/> — it’s fast, simple, and built for grassroots racing.
+                <Button :label="$t('home.getStarted.cta')" size="small" @click.prevent="$router.push({name: 'auth'})"/>
+                {{ $t('home.getStarted.slogan') }}
               </div>
             </div>
           </div>
@@ -158,18 +161,18 @@
             <div class="flex items-center justify-center h-full">
               <div class="w-full max-w-2xl px-6 py-12 lg:p-12 xl:p-16 text-center lg:text-left">
                 <h2 class="text-4xl xl:text-5xl font-bold text-surface-0 lg:text-surface-900 dark:text-surface-0 mb-6 !leading-tight">
-                  <span class="block">Founder</span>
-                  <span class="block text-primary">Mykhailo Fedorenko</span>
+                  <span class="block">{{ $t('home.founder.title') }}</span>
+                  <span class="block text-primary">{{ $t('home.founder.name') }}</span>
                 </h2>
 
                 <p class="text-surface-0/90 lg:text-surface-700 dark:text-surface-200 text-xl leading-normal mb-8 max-w-xl lg:max-w-none">
-                  Hi! I’m a mountain biking enthusiast from Ukraine, passionate about mini downhill and mini enduro. I’ve taken part in many amateur races and know how much better events feel when there’s proper timekeeping — but professional systems are often out of reach.
+                  {{ $t('home.founder.p1') }}
                 </p>
                 <p class="text-surface-0/90 lg:text-surface-700 dark:text-surface-200 text-xl leading-normal mb-8 max-w-xl lg:max-w-none">
-                  Not everyone has access to expensive timing equipment, and sometimes you just want to measure your runs during training or organize a small local race with friends.
+                  {{ $t('home.founder.p2') }}
                 </p>
                 <p class="text-surface-0/90 lg:text-surface-700 dark:text-surface-200 text-xl leading-normal mb-8 max-w-xl lg:max-w-none">
-                  As a programmer and rider, I decided to build an accessible timing system that anyone can use with just a two smartphones — no special hardware required.
+                  {{ $t('home.founder.p3') }}
                 </p>
 
                 <div class="flex items-center gap-4 justify-center lg:justify-start">

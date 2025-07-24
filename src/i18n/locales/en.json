@@ -11,6 +11,11 @@
     "timekeeping": "Timekeeping"
   },
   "home": {
+    "welcome": {
+      "title": "Smart Timing for MTB, Enduro & Time-Trial Races — No Expensive Gear Needed",
+      "description": "Looking for a reliable and affordable way to time mountain bike races, enduro stages, or any race with individual starts? Say goodbye to expensive timing systems and hello to Smart Timing — the easiest way to run local races using just smartphones. Whether you're timing mini-downhill, enduro, or trail-running events, our tool gives you full control of your race in minutes.",
+      "join": "Join Now! It's Free!"
+    },
     "hiw": {
       "title": "How It Works",
       "p1title": "Create a Competition",
@@ -26,14 +31,35 @@
       "p6title": "Get the Results",
       "p6description": "All results are automatically saved in the participants' table for each stage."
     },
-    "welcome": {
-      "title": "Smart Timing for MTB, Enduro & Time-Trial Races — No Expensive Gear Needed",
-      "description": "Looking for a reliable and affordable way to time mountain bike races, enduro stages, or any race with individual starts? Say goodbye to expensive timing systems and hello to Smart Timing — the easiest way to run local races using just smartphones. Whether you're timing mini-downhill, enduro, or trail-running events, our tool gives you full control of your race in minutes.",
-      "join": "Join Now! It's Free!"
-    },
     "why": {
       "title": "Why Choose Smart Timing?",
-      "description": ""
+      "p1": "✅ No special hardware required — just smartphones",
+      "p2": "✅ Runs in your mobile browser — no app installs",
+      "p3": "✅ Real-time timing and results",
+      "p4": "✅ Perfect for small or local MTB and enduro events",
+      "p5": "✅ Easy to use for volunteers and small teams",
+      "end": "Whether you're organizing a local downhill race, an enduro series, or time-trial training sessions, Smart Timing gives you all the tools you need — without breaking the budget."
+    },
+    "for": {
+      "title": "Ideal for:",
+      "p1": "\uD83D\uDEB5 Mountain bike races (MTB)",
+      "p2": "⏱\uFE0F Enduro and time trial stages",
+      "p3": "\uD83C\uDFC3 Individual-start events",
+      "p4": "\uD83E\uDDEA Practice sessions or test races",
+      "p5": "\uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67\u200D\uD83D\uDC66 Community sports and youth events"
+    },
+    "getStarted": {
+      "title": "Get Started in Minutes",
+      "description": "Smart Timing is the easiest way to bring accurate race timing to your event — no expensive RFID chips, no complex setup, no learning curve. Sign up, invite your team, and start your first race in just a few clicks.",
+      "cta": "Join Now",
+      "slogan": "— it’s fast, simple, and built for grassroots racing."
+    },
+    "founder": {
+      "title": "Founder",
+      "name": "Mykhailo Fedorenko",
+      "p1": "Hi! I’m a mountain biking enthusiast from Ukraine, passionate about mini downhill and mini enduro. I’ve taken part in many amateur races and know how much better events feel when there’s proper timekeeping — but professional systems are often out of reach.",
+      "p2": "Not everyone has access to expensive timing equipment, and sometimes you just want to measure your runs during training or organize a small local race with friends.",
+      "p3": "As a programmer and rider, I decided to build an accessible timing system that anyone can use with just a two smartphones — no special hardware required."
     }
   }
 }
