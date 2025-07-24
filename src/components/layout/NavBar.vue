@@ -16,14 +16,14 @@
       </div>
       <div class="p-menubar-item-content mr-2">
         <a
-          @click.prevent="$router.push('/')"
+          @click.prevent="$router.push({name: 'home', params: {locale: Trans.currentLocale}})"
           v-ripple
           class="flex items-center cursor-pointer pi pi-home p-menubar-item-link"
         ></a>
       </div>
       <div v-if="authStore.user.id" class="p-menubar-item-content mr-6">
         <a
-          @click.prevent="$router.push('/account')"
+          @click.prevent="$router.push({name: 'dashboard', params: {locale: Trans.currentLocale}})"
           v-ripple
           class="flex items-center cursor-pointer pi pi-user p-menubar-item-link"
         ></a>
@@ -52,6 +52,7 @@ import { useAuthStore } from '@/stores/auth.js'
 import { onClickOutside } from '@vueuse/core'
 import { useTemplateRef } from 'vue'
 import LocaleSwitcher from '@/components/LocaleSwitcher.vue'
+import Trans from '@/i18n/translation'
 
 const router = useRouter()
 const authStore = useAuthStore()

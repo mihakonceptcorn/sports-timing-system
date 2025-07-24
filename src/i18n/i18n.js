@@ -1,6 +1,6 @@
 import { createI18n } from 'vue-i18n'
-import en from './locales/en.json'
-import ua from './locales/ua.json'
+import en from '@/i18n/locales/en.json'
+import ua from '@/i18n/locales/ua.json'
 
 function loadLocaleMessages() {
   const locales = [{ en: en }, { ua: ua }]
