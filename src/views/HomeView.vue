@@ -203,6 +203,18 @@
                     </svg>
                   </Button>
                 </div>
+                <div class="pt-6">
+                  <p>Друзі проекту:</p>
+                  <Button
+                    @click.prevent="openFuten"
+                    severity="secondary"
+                    rounded
+                    icon="pi"
+                    class="mt-4"
+                  >
+                    <img src="@/assets/images/futen-bike.png" alt="futen-bike"/>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -228,6 +240,10 @@ const openLinkedin = () => {
 
 const openStrava = () => {
   window.open("https://www.strava.com/athletes/2737135", "_blank")
+}
+
+const openFuten = () => {
+  window.open("https://futenbike.com.ua/uk", "_blank")
 }
 </script>
 
