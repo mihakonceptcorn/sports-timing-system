@@ -19,6 +19,11 @@
       </Column>
       <Column field="number" header="Number"></Column>
       <Column field="name" header="Name"></Column>
+      <Column field="role" header="Role">
+        <template #body="slotProps">
+          {{ roleLabel(slotProps.data.role) }}
+        </template>
+      </Column>
       <Column field="action" header="Actions">
         <template #body="slotProps">
           <div style="min-width: 72px">
@@ -53,14 +58,19 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
+import { useI18n } from 'vue-i18n'
+import { getRoleLabel } from '@/constants/competitionTypes'
 
 const stagesStore = useStagesStore()
 const router = useRouter()
 const confirm = useConfirm()
 const toast = useToast()
+const { locale } = useI18n()
 
 const selectedStages = ref()
 let deleteId = null
+
+const roleLabel = (role) => getRoleLabel(role, locale.value)
 
 const goToEdit = (id) => {
   router.push({name: 'stage-edit', params: { stageId: id }})

@@ -34,6 +34,7 @@ export const useStagesStore = defineStore('stages', {
             competitionId: doc.data().competitionId,
             number: doc.data().number,
             name: doc.data().name,
+            role: doc.data().role || null,
           }
           stages.push(stage)
         });
@@ -42,11 +43,12 @@ export const useStagesStore = defineStore('stages', {
         console.log('error.message: ', error.message)
       });
     },
-    async createStage(competitionId, number, name) {
+    async createStage(competitionId, number, name, role = null) {
       const payload = {
         competitionId: competitionId,
         number: number,
-        name: name
+        name: name,
+        role: role,
       }
 
       await addDoc(stagesCollectionRef, payload)
