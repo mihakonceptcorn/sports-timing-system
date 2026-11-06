@@ -28,6 +28,11 @@
         <Column field="country" header="Country"></Column>
         <Column field="city" header="City"></Column>
         <Column field="location" header="Location"></Column>
+        <Column field="type" header="Type">
+          <template #body="slotProps">
+            {{ competitionTypeLabel(slotProps.data.type, { short: true, locale }) }}
+          </template>
+        </Column>
         <Column field="action" header="Actions">
           <template #body="slotProps">
             <div style="min-width: 72px">
@@ -72,11 +77,14 @@ import { useToast } from 'primevue/usetoast'
 import { useCompetitionsStore } from '@/stores/competitions.js'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import { competitionTypeLabel } from '@/constants/competitionTypes'
 
 const competitionsStore = useCompetitionsStore()
 const router = useRouter()
 const confirm = useConfirm()
 const toast = useToast()
+const { locale } = useI18n()
 
 const selectedCompetitions = ref()
 let deleteId = null

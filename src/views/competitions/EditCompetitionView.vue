@@ -47,6 +47,11 @@
         <TextArea placeholder="Description" id="description" type="text" v-model="competition.description"/>
       </div>
 
+      <CompetitionTypeField v-model:type="competition.type" v-model:runsCount="competition.runsCount" />
+      <small class="text-surface-500">
+        Тип визначає, які етапи можна додавати далі. Уже створені етапи залишаються без змін.
+      </small>
+
       <div class="gap-2 mt-4">
         <Button label="Update" icon="pi pi-refresh" @click.prevent="update"/>
       </div>
@@ -58,6 +63,7 @@
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useCompetitionsStore } from '@/stores/competitions.js'
+import CompetitionTypeField from '@/components/competitions/CompetitionTypeField.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -74,6 +80,10 @@ const update = async () => {
 
 onMounted(async () => {
   competition.value = await competitionsStore.getCompetitionById(route.params.id)
+  competition.value.type = competition.value.type || null
+  if (!competition.value.runsCount || competition.value.runsCount < 2) {
+    competition.value.runsCount = 2
+  }
   competitionDate.value = new Date(competition.value.date)
 })
 </script>

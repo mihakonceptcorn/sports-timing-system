@@ -1,13 +1,50 @@
 import { defineStore } from 'pinia'
-import { collection, onSnapshot, doc, getDoc, addDoc, where, deleteDoc, updateDoc, query, orderBy, limit } from 'firebase/firestore'
+import { collection, onSnapshot, doc, getDoc, addDoc, where, deleteDoc, updateDoc, query, orderBy } from 'firebase/firestore'
 import { db } from '@/js/firebase'
 import { useAuthStore } from '@/stores/auth.js'
+import { useStagesStore } from '@/stores/stages.js'
+import { COMPETITION_TYPE, buildInitialStages } from '@/constants/competitionTypes'
 
 let competitionsCollectionRef = null
 let competitionsCollectionQuery = null
 let storeAuth = null
 let getCompetitionsSnapshot = null
 let getTimekeepingSnapshot = null
+
+function mapCompetition(docSnap) {
+  const data = docSnap.data()
+  return {
+    id: docSnap.id,
+    name: data.name,
+    stages: data.stages,
+    date: data.date,
+    country: data.country,
+    city: data.city,
+    location: data.location,
+    description: data.description,
+    type: data.type || null,
+    runsCount: data.runsCount ?? null,
+    timekeeper: data.timekeeper || null,
+  }
+}
+
+function competitionFields(competitionData) {
+  const type = competitionData.type || null
+  const runsCount = type === COMPETITION_TYPE.BEST_OF_N
+    ? Math.max(2, Number(competitionData.runsCount) || 2)
+    : null
+
+  return {
+    name: competitionData.name,
+    date: competitionData.date instanceof Date ? competitionData.date.getTime() : competitionData.date,
+    country: competitionData.country,
+    city: competitionData.city,
+    location: competitionData.location,
+    description: competitionData.description,
+    type,
+    runsCount,
+  }
+}
 
 export const useCompetitionsStore = defineStore('competitions', {
   state: () => {
@@ -33,18 +70,8 @@ export const useCompetitionsStore = defineStore('competitions', {
     getCompetitions() {
       getCompetitionsSnapshot = onSnapshot(competitionsCollectionQuery, (querySnapshot) => {
         let competitions = []
-        querySnapshot.forEach((doc) => {
-          let comp = {
-            id: doc.id,
-            name: doc.data().name,
-            stages: doc.data().stages,
-            date: doc.data().date,
-            country: doc.data().country,
-            city: doc.data().city,
-            location: doc.data().location,
-            description: doc.data().description,
-          }
-          competitions.push(comp)
+        querySnapshot.forEach((docSnap) => {
+          competitions.push(mapCompetition(docSnap))
         });
         this.competitions = competitions
       }, error => {
@@ -52,31 +79,33 @@ export const useCompetitionsStore = defineStore('competitions', {
       });
     },
     async createCompetition(competitionData) {
-      const payload = {
-        name: competitionData.name,
-        date: competitionData.date.getTime(),
-        country: competitionData.country,
-        city: competitionData.city,
-        location: competitionData.location,
-        description: competitionData.description,
+      const fields = competitionFields(competitionData)
+      const docRef = await addDoc(competitionsCollectionRef, {
+        ...fields,
         owner: storeAuth.user.id,
+      })
+
+      const stagesStore = useStagesStore()
+      const stages = buildInitialStages(fields.type, fields.runsCount)
+      for (const stage of stages) {
+        await stagesStore.createStage(docRef.id, stage.number, stage.name, stage.role)
       }
 
-      await addDoc(competitionsCollectionRef, payload)
+      return docRef.id
     },
     async updateCompetition(competitionData) {
       const payload = {
-        name: competitionData.name,
-        date: competitionData.date.getTime(),
+        ...competitionFields(competitionData),
         stages: competitionData.stages,
-        country: competitionData.country,
-        city: competitionData.city,
-        location: competitionData.location,
-        description: competitionData.description,
         owner: storeAuth.user.id,
       }
 
       await updateDoc(doc(competitionsCollectionRef, competitionData.id), payload);
+    },
+    async updateRunsCount(id, runsCount) {
+      await updateDoc(doc(competitionsCollectionRef, id), {
+        runsCount: Math.max(2, Number(runsCount) || 2),
+      })
     },
     async deleteCompetition(id) {
       await deleteDoc(doc(competitionsCollectionRef, id));
@@ -111,18 +140,8 @@ export const useCompetitionsStore = defineStore('competitions', {
 
       getTimekeepingSnapshot = onSnapshot(timekeepingCollectionQuery, (querySnapshot) => {
         let tkCompetitions = []
-        querySnapshot.forEach((doc) => {
-          let note = {
-            id: doc.id,
-            name: doc.data().name,
-            stages: doc.data().stages,
-            date: doc.data().date,
-            country: doc.data().country,
-            city: doc.data().city,
-            location: doc.data().location,
-            description: doc.data().description,
-          }
-          tkCompetitions.push(note)
+        querySnapshot.forEach((docSnap) => {
+          tkCompetitions.push(mapCompetition(docSnap))
         });
         this.timeKeepingCompetitions = tkCompetitions
       }, error => {

@@ -6,6 +6,7 @@ import DashboardView from '@/views/DashboardView.vue'
 import CompetitionsView from '@/views/competitions/CompetitionsView.vue'
 import CreateCompetitionView from '@/views/competitions/CreateCompetitionView.vue'
 import PreviewCompetitionView from '@/views/competitions/PreviewCompetitionView.vue'
+import CompetitionResultsView from '@/views/competitions/CompetitionResultsView.vue'
 import TimekeepingView from '@/views/competitions/TimekeepingView.vue'
 import TimekeepingCompetitionView from '@/views/competitions/TimekeepingCompetitionView.vue'
 import StartedCompetitionView from '@/views/competitions/StartedCompetitionView.vue'
@@ -57,6 +58,11 @@ const router = createRouter({
               path: 'competition/:id',
               name: 'competition-preview',
               component: PreviewCompetitionView
+            },
+            {
+              path: 'competition/:id/results',
+              name: 'competition-results',
+              component: CompetitionResultsView
             },
             {
               path: 'competition/:id/edit',

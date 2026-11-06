@@ -61,5 +61,58 @@
       "p2": "Not everyone has access to expensive timing equipment, and sometimes you just want to measure your runs during training or organize a small local race with friends.",
       "p3": "As a programmer and rider, I decided to build an accessible timing system that anyone can use with just a two smartphones — no special hardware required."
     }
+  },
+  "results": {
+    "title": "Competition Results",
+    "viewResults": "View Results",
+    "backToCompetition": "Back to competition",
+    "print": "Print",
+    "allCategories": "All categories (Overall)",
+    "category": "Category",
+    "search": "Search by number or name",
+    "place": "Place",
+    "number": "№",
+    "rider": "Participant",
+    "team": "Team",
+    "time": "Time",
+    "bestTime": "Best Time",
+    "totalTime": "Total Time",
+    "gap": "Gap",
+    "status": "Status",
+    "qualifying": "Qualifying",
+    "final": "Final",
+    "overall": "Overall Standings",
+    "finished": "Finished",
+    "totalRiders": "Total Participants",
+    "stages": "Stages",
+    "leader": "Leader",
+    "noResults": "No results yet",
+    "noResultsHint": "Results will appear here automatically as participants cross the finish line."
+  },
+  "competitionTypes": {
+    "single_run": {
+      "label": "Single Run (One attempt)",
+      "shortLabel": "Single Run",
+      "description": "Classic single-run format.",
+      "stageHint": "One run. The stage is created together with the competition."
+    },
+    "best_of_n": {
+      "label": "Best of N Runs (Best of multiple attempts)",
+      "shortLabel": "Best of N",
+      "description": "2 or more runs without qualification, the minimum time counts towards standings.",
+      "stageHint": "Each stage is another attempt on the same track. The best (minimum) time counts."
+    },
+    "qualifying_final": {
+      "label": "Qualifying + Final (Qualification + Final)",
+      "shortLabel": "Qualifying + Final",
+      "description": "Two-round format with a qualification round and a final run.",
+      "stageHint": "Two rounds: qualifying and final. Both are created automatically."
+    },
+    "multi_stage": {
+      "label": "Multi-stage / Enduro",
+      "shortLabel": "Multi-stage / Enduro",
+      "description": "Multiple special stages in a day with cumulative time.",
+      "stageHint": "Add each special stage separately. Time is accumulated across stages."
+    }
   }
 }

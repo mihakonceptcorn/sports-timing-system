@@ -27,6 +27,11 @@
         <InputText v-model="stage.name" id="id" placeholder="name" aria-describedby="username-help"/>
       </div>
 
+      <div v-if="stage.role" class="flex flex-col gap-0.5 mt-4">
+        <label for="role">Role</label>
+        <InputText :modelValue="stage.role" id="role" disabled />
+      </div>
+
       <div class="gap-2 mt-4">
         <Button label="Update" icon="pi pi-refresh" @click.prevent="update"/>
       </div>
