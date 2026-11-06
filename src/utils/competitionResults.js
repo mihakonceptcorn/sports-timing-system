@@ -477,3 +477,72 @@ export function calculateCompetitionResults({ competition, stages = [], competit
 
   return results
 }
+
+/**
+ * Calculate results grouped by category, where each category has its own independent ranking and gap calculation.
+ * Also returns overall scratch results.
+ */
+export function calculateResultsByCategory({ competition, stages = [], competitors = [], options = {} }) {
+  const sortedStages = [...stages].sort((a, b) => (Number(a.number) || 0) - (Number(b.number) || 0))
+  const compType = competition?.type || COMPETITION_TYPE.MULTI_STAGE
+  const allAthletes = buildAthleteRecords(competitors)
+
+  function calculateForAthletes(athletes) {
+    switch (compType) {
+      case COMPETITION_TYPE.SINGLE_RUN:
+        return calculateSingleRunResults(athletes, sortedStages[0])
+      case COMPETITION_TYPE.BEST_OF_N:
+        return calculateBestOfNResults(athletes, sortedStages)
+      case COMPETITION_TYPE.QUALIFYING_FINAL:
+        return calculateQualifyingFinalResults(athletes, sortedStages, { mode: options.qfMode || 'overall' })
+      case COMPETITION_TYPE.MULTI_STAGE:
+      default:
+        return calculateMultiStageResults(athletes, sortedStages)
+    }
+  }
+
+  // Overall scratch
+  const overallRows = calculateForAthletes(allAthletes)
+  const overallGroup = {
+    key: 'overall',
+    category: 'all',
+    categoryName: options.locale === 'ua' ? 'Абсолютний залік' : 'Overall Standings',
+    totalCount: overallRows.length,
+    finishersCount: overallRows.filter((r) => r.place != null).length,
+    leader: overallRows.find((r) => r.place === 1) || null,
+    results: overallRows,
+  }
+
+  // Group athletes by category
+  const categoryMap = new Map()
+  for (const athlete of allAthletes) {
+    const rawCat = (athlete.category || '').trim()
+    const catKey = rawCat ? rawCat.toLowerCase() : '__no_category__'
+    if (!categoryMap.has(catKey)) {
+      categoryMap.set(catKey, {
+        rawName: rawCat || (options.locale === 'ua' ? 'Без категорії' : 'No Category'),
+        athletes: [],
+      })
+    }
+    categoryMap.get(catKey).athletes.push(athlete)
+  }
+
+  const categoryGroups = []
+  for (const [catKey, { rawName, athletes }] of categoryMap.entries()) {
+    const results = calculateForAthletes(athletes)
+    categoryGroups.push({
+      key: catKey,
+      category: catKey,
+      categoryName: rawName,
+      totalCount: results.length,
+      finishersCount: results.filter((r) => r.place != null).length,
+      leader: results.find((r) => r.place === 1) || null,
+      results,
+    })
+  }
+
+  return {
+    categories: categoryGroups,
+    overall: overallGroup,
+  }
+}
