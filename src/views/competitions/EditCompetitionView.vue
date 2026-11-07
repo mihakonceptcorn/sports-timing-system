@@ -1,5 +1,7 @@
 <template>
-  <Card v-if="competition" class="relative">
+  <div class="edit-competition w-full">
+    <AppBreadcrumb :items="breadcrumbItems" />
+    <Card v-if="competition" class="relative">
     <template #title>Edit Competition</template>
     <template #content>
       <Button
@@ -57,20 +59,34 @@
       </div>
     </template>
   </Card>
+  </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useCompetitionsStore } from '@/stores/competitions.js'
 import CompetitionTypeField from '@/components/competitions/CompetitionTypeField.vue'
+import AppBreadcrumb from '@/components/navigation/AppBreadcrumb.vue'
 
 const route = useRoute()
 const router = useRouter()
+const { locale } = useI18n()
 const competitionsStore = useCompetitionsStore()
 
 const competition = ref(null)
 const competitionDate = ref(null)
+
+const breadcrumbItems = computed(() => [
+  {
+    label: competition.value?.name || (locale.value === 'ua' ? 'Змагання' : 'Competition'),
+    to: { name: 'competition-preview', params: { id: route.params.id } },
+  },
+  {
+    label: locale.value === 'ua' ? 'Редагування' : 'Edit',
+  },
+])
 
 const update = async () => {
   competition.value.date = competitionDate.value

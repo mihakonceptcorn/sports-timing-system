@@ -17,33 +17,51 @@
           </a>
         </template>
       </Column>
-      <Column field="number" header="Number"></Column>
-      <Column field="name" header="Name"></Column>
-      <Column field="role" header="Role">
+      <Column field="number" :header="locale === 'ua' ? '№' : 'Number'" sortable style="width: 4rem"></Column>
+      <Column field="name" :header="locale === 'ua' ? 'Назва етапу' : 'Name'">
         <template #body="slotProps">
-          {{ roleLabel(slotProps.data.role) }}
+          <a
+            @click.prevent="$router.push({ name: 'stage-preview', params: { id: $route.params.id, stageId: slotProps.data.id } })"
+            class="font-semibold text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 cursor-pointer inline-flex items-center gap-1.5"
+          >
+            <span>{{ slotProps.data.name }}</span>
+            <i class="pi pi-chevron-right text-xs"></i>
+          </a>
         </template>
       </Column>
-      <Column field="action" header="Actions">
+      <Column field="role" :header="locale === 'ua' ? 'Роль / Тип' : 'Role'">
         <template #body="slotProps">
-          <div style="min-width: 72px">
+          <Tag :value="roleLabel(slotProps.data.role)" severity="secondary" class="text-xs" />
+        </template>
+      </Column>
+      <Column field="action" :header="locale === 'ua' ? 'Дії' : 'Actions'" headerStyle="width: 8rem">
+        <template #body="slotProps">
+          <div class="flex items-center gap-1">
+            <Button
+              icon="pi pi-arrow-right"
+              rounded
+              variant="outlined"
+              size="small"
+              :title="locale === 'ua' ? 'Перейти до етапу' : 'Open stage'"
+              @click.prevent="$router.push({ name: 'stage-preview', params: { id: $route.params.id, stageId: slotProps.data.id } })"
+            />
             <Button
               icon="pi pi-pencil"
               rounded
-              aria-label="Filter"
               variant="outlined"
               size="small"
+              severity="secondary"
+              :title="locale === 'ua' ? 'Редагувати' : 'Edit'"
               @click.prevent="goToEdit(slotProps.data.id)"
             />
             <Button
               @click.prevent="confirmDialog(slotProps.data.id, slotProps.data.name)"
-              icon="pi pi-times"
+              icon="pi pi-trash"
               rounded
-              aria-label="Filter"
               variant="outlined"
               size="small"
               severity="danger"
-              class="ml-2"
+              :title="locale === 'ua' ? 'Видалити' : 'Delete'"
             />
           </div>
         </template>

@@ -38,8 +38,8 @@
       </div>
 
       <div class="flex flex-col gap-0.5 mt-2">
-        <label for="category">DOB</label>
-        <InputText v-model="competitor.dob" id="dob" placeholder="DOB" />
+        <label for="dob">{{ locale === 'ua' ? 'Дата народження' : 'DOB' }}</label>
+        <InputText v-model="competitor.dob" id="dob" :placeholder="locale === 'ua' ? 'dd-mm-yyyy' : 'yyyy-mm-dd'" />
       </div>
 
       <div class="flex flex-col gap-0.5 mt-2">
@@ -67,10 +67,12 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useCompetitorsStore } from '@/stores/competitors.js';
 
 const route = useRoute()
 const router = useRouter()
+const { locale } = useI18n()
 const competitorsStore = useCompetitorsStore()
 
 const categories = ref(['amateurs', 'masters', 'elite', 'juniors'])

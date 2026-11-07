@@ -1,5 +1,8 @@
 <template>
   <div class="competition-results w-full pb-10">
+    <!-- Breadcrumbs -->
+    <AppBreadcrumb :items="breadcrumbItems" class="no-print" />
+
     <!-- Top action bar -->
     <div class="flex items-center justify-between mb-4 flex-wrap gap-2 no-print">
       <Button
@@ -433,6 +436,7 @@ import {
   getCompetitionType,
 } from '@/constants/competitionTypes'
 import { calculateResultsByCategory } from '@/utils/competitionResults'
+import AppBreadcrumb from '@/components/navigation/AppBreadcrumb.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -449,6 +453,18 @@ const searchQuery = ref('')
 let unsubscribeCompetitors = null
 
 const competitionType = computed(() => competition.value?.type || COMPETITION_TYPE.MULTI_STAGE)
+
+const breadcrumbItems = computed(() => {
+  return [
+    {
+      label: competition.value?.name || (locale.value === 'ua' ? 'Змагання' : 'Competition'),
+      to: { name: 'competition-preview', params: { id: route.params.id } },
+    },
+    {
+      label: locale.value === 'ua' ? 'Результати' : 'Results',
+    },
+  ]
+})
 
 const formatDescription = computed(() => {
   return getCompetitionType(competitionType.value, locale.value)?.description || 'Хронометраж заїздів'

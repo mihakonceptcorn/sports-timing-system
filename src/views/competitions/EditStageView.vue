@@ -1,5 +1,7 @@
 <template>
-  <Card v-if="stage" class="relative">
+  <div class="edit-stage w-full">
+    <AppBreadcrumb :items="breadcrumbItems" />
+    <Card v-if="stage" class="relative">
     <template #title>Edit Stage</template>
     <template #content>
       <Button
@@ -37,18 +39,39 @@
       </div>
     </template>
   </Card>
+  </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useStagesStore } from '@/stores/stages.js'
+import { useCompetitionsStore } from '@/stores/competitions.js'
+import AppBreadcrumb from '@/components/navigation/AppBreadcrumb.vue'
 
 const route = useRoute()
 const router = useRouter()
+const { locale } = useI18n()
 const stagesStore = useStagesStore()
+const competitionsStore = useCompetitionsStore()
 
 const stage = ref(null)
+const competition = ref(null)
+
+const breadcrumbItems = computed(() => [
+  {
+    label: competition.value?.name || (locale.value === 'ua' ? 'Змагання' : 'Competition'),
+    to: { name: 'competition-preview', params: { id: route.params.id } },
+  },
+  {
+    label: stage.value?.name || (locale.value === 'ua' ? 'Етап' : 'Stage'),
+    to: { name: 'stage-preview', params: { id: route.params.id, stageId: route.params.stageId } },
+  },
+  {
+    label: locale.value === 'ua' ? 'Редагування' : 'Edit',
+  },
+])
 
 const update = async () => {
   await stagesStore.updateStage(stage.value)
@@ -57,6 +80,7 @@ const update = async () => {
 
 onMounted(async () => {
   stage.value = await stagesStore.getStageById(route.params.stageId)
+  competition.value = await competitionsStore.getCompetitionById(route.params.id)
 })
 </script>
 

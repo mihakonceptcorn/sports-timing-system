@@ -1,137 +1,290 @@
 <template>
-  <Card class="relative">
-    <template #content>
-      <div class="flex items-center justify-between mb-6 flex-wrap gap-2">
-        <div class="flex items-center gap-2 flex-wrap">
-          <Button
-            @click.prevent="$router.push({name: 'competitions'})"
-            label="Go Back"
-            icon="pi pi-arrow-left"
-          />
-          <Button
-            @click.prevent="goToResults"
-            label="Переглянути результати"
-            icon="pi pi-trophy"
-            severity="success"
-          />
-        </div>
-      </div>
+  <div class="competition-preview-wrapper w-full">
+    <!-- Breadcrumbs navigation -->
+    <AppBreadcrumb :items="breadcrumbItems" />
 
-      <h3 class="text-xl" v-if="competition">{{ competition.name }}</h3>
-
-      <SpeedDial :model="actions" direction="down" class="absolute! top-4 right-4" />
-
-      <Tabs value="0">
-        <TabList>
-          <Tab value="0">Competition</Tab>
-          <Tab value="1">Stages</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel value="0">
-            <Card v-if="competition">
-              <template #title>{{ competition.name }}</template>
-              <template #content>
-                <p>country: <span class="font-bold">{{ competition.country }}</span></p>
-                <p>city: <span class="font-bold">{{ competition.city }}</span></p>
-                <p>location: <span class="font-bold">{{ competition.location }}</span></p>
-                <p>date: <span class="font-bold">{{ competition.date }}</span></p>
-                <p>type: <span class="font-bold">{{ competitionTypeLabel(competition.type, { locale }) }}</span></p>
-                <p v-if="competition.type === COMPETITION_TYPE.BEST_OF_N">
-                  runs: <span class="font-bold">{{ competition.runsCount }}</span>
-                </p>
-                <p>stages: <span class="font-bold">{{ competition.stages }}</span></p>
-                <p>description: <span class="font-bold">{{ competition.description }}</span></p>
-              </template>
-            </Card>
-          </TabPanel>
-
-          <TabPanel value="1">
-            <Message v-if="stageHint" severity="info" :closable="false" class="mb-4">
-              {{ stageHint }}
-            </Message>
-
+    <Card class="relative">
+      <template #content>
+        <!-- Top action bar -->
+        <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+          <div class="flex items-center gap-2 flex-wrap">
             <Button
-              v-if="canAddStage"
-              @click.prevent="openCreateStage"
-              :label="createStageLabel"
-              icon="pi pi-plus"
+              @click.prevent="$router.push({ name: 'competitions' })"
+              :label="locale === 'ua' ? 'До змагань' : 'Competitions'"
+              icon="pi pi-arrow-left"
+              severity="secondary"
+              outlined
+              size="small"
             />
-            <Message v-else severity="secondary" :closable="false">
-              {{ stageLimitMessage }}
-            </Message>
-
-            <StagesView />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-
-      <div class="mt-6 flex gap-2 flex-wrap" v-if="competition">
-        <div v-if="competition.timekeeper" class="flex items-center gap-4">
-          <div>Timekeeper: {{ competition.timekeeper }}</div>
-          <Button
-            @click.prevent="removeTimekeeper"
-            label="Remove Timekeeper"
-            icon="pi pi-user-minus"
-            severity="danger"
-          />
-        </div>
-        <div v-else>
-          <InputText name="email" type="text" placeholder="Email" v-model="email" class="mr-1"/>
-          <Button
-            @click.prevent="addTimekeeper"
-            label="Add Timekeeper"
-            icon="pi pi-user-plus"
-            severity="warn"
-          />
-        </div>
-      </div>
-
-      <Dialog v-model:visible="visible" modal :header="createStageLabel" :style="{ width: '25rem' }">
-        <template v-if="competitionType === COMPETITION_TYPE.QUALIFYING_FINAL">
-          <div class="flex flex-col gap-2 mb-8">
-            <label for="round" class="font-semibold">Round</label>
-            <Select
-              v-model="selectedRound"
-              inputId="round"
-              :options="missingRounds"
-              optionLabel="name"
-              optionValue="role"
-              placeholder="Select round"
-              class="w-full"
+            <Button
+              @click.prevent="goToResults"
+              :label="locale === 'ua' ? 'Переглянути результати' : 'View Results'"
+              icon="pi pi-trophy"
+              severity="success"
+              size="small"
             />
           </div>
-        </template>
-        <template v-else>
-          <div class="flex items-center gap-4 mb-4">
-            <label for="stageNumber" class="font-semibold w-24">Stage number</label>
-            <InputNumber v-model="stageData.number" id="stageNumber" class="flex-auto" autocomplete="off"/>
-          </div>
-          <div class="flex items-center gap-4 mb-8">
-            <label for="stageName" class="font-semibold w-24">Name</label>
-            <InputText v-model="stageData.name" id="stageName" class="flex-auto" autocomplete="off" />
-          </div>
-        </template>
-        <div class="flex justify-end gap-2">
-          <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
-          <Button type="button" label="Create" @click="createStage"></Button>
-        </div>
-      </Dialog>
 
-      <Toast position="bottom-right"/>
-      <ConfirmDialog />
-    </template>
-  </Card>
+          <div class="flex items-center gap-2">
+            <Button
+              @click.prevent="goToEdit"
+              icon="pi pi-pencil"
+              :label="locale === 'ua' ? 'Редагувати' : 'Edit'"
+              severity="secondary"
+              text
+              size="small"
+            />
+            <Button
+              @click.prevent="confirmDialog"
+              icon="pi pi-trash"
+              :label="locale === 'ua' ? 'Видалити' : 'Delete'"
+              severity="danger"
+              text
+              size="small"
+            />
+          </div>
+        </div>
+
+        <!-- Competition Header -->
+        <div v-if="competition" class="mb-6 border-b border-surface-200 dark:border-surface-800 pb-4">
+          <div class="flex items-center gap-3 flex-wrap">
+            <h2 class="text-2xl font-bold text-surface-900 dark:text-surface-0">
+              {{ competition.name }}
+            </h2>
+            <Tag
+              :value="competitionTypeLabel(competition.type, { short: true, locale })"
+              severity="info"
+              class="text-xs uppercase font-bold"
+            />
+          </div>
+          <div class="text-sm text-surface-500 dark:text-surface-400 mt-2 flex items-center gap-4 flex-wrap">
+            <span v-if="competition.location || competition.city || competition.country">
+              <i class="pi pi-map-marker mr-1 text-red-500"></i>
+              {{ [competition.location, competition.city, competition.country].filter(Boolean).join(', ') }}
+            </span>
+            <span v-if="competition.date">
+              <i class="pi pi-calendar mr-1 text-blue-500"></i>
+              {{ formatDate(competition.date) }}
+            </span>
+            <span>
+              <i class="pi pi-flag mr-1 text-primary-500"></i>
+              {{ stagesStore.stages.length }} {{ locale === 'ua' ? 'етапів' : 'stages' }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Main Navigation Tabs: Info | Stages | Competitors -->
+        <Tabs v-model:value="activeTab">
+          <TabList>
+            <Tab value="info">
+              <i class="pi pi-info-circle mr-2"></i>
+              {{ locale === 'ua' ? 'Інформація' : 'Information' }}
+            </Tab>
+            <Tab value="stages">
+              <i class="pi pi-list mr-2"></i>
+              {{ locale === 'ua' ? 'Етапи' : 'Stages' }}
+              <Badge :value="stagesStore.stages.length" severity="secondary" class="ml-1 text-xs" />
+            </Tab>
+            <Tab value="competitors">
+              <i class="pi pi-users mr-2"></i>
+              {{ locale === 'ua' ? 'Учасники' : 'Competitors' }}
+              <Badge :value="totalCompetitorsCount" severity="secondary" class="ml-1 text-xs" />
+            </Tab>
+          </TabList>
+
+          <TabPanels>
+            <!-- TAB 1: INFO -->
+            <TabPanel value="info">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-2">
+                <Card class="border border-surface-200 dark:border-surface-800 shadow-none">
+                  <template #title>
+                    <span class="text-base font-semibold">
+                      {{ locale === 'ua' ? 'Параметри змагання' : 'Competition Details' }}
+                    </span>
+                  </template>
+                  <template #content>
+                    <div class="flex flex-col gap-2.5 text-sm">
+                      <div class="flex justify-between py-1 border-b border-surface-100 dark:border-surface-800">
+                        <span class="text-surface-500 dark:text-surface-400">{{ locale === 'ua' ? 'Країна:' : 'Country:' }}</span>
+                        <span class="font-medium text-surface-900 dark:text-surface-0">{{ competition?.country || '—' }}</span>
+                      </div>
+                      <div class="flex justify-between py-1 border-b border-surface-100 dark:border-surface-800">
+                        <span class="text-surface-500 dark:text-surface-400">{{ locale === 'ua' ? 'Місто:' : 'City:' }}</span>
+                        <span class="font-medium text-surface-900 dark:text-surface-0">{{ competition?.city || '—' }}</span>
+                      </div>
+                      <div class="flex justify-between py-1 border-b border-surface-100 dark:border-surface-800">
+                        <span class="text-surface-500 dark:text-surface-400">{{ locale === 'ua' ? 'Локація:' : 'Location:' }}</span>
+                        <span class="font-medium text-surface-900 dark:text-surface-0">{{ competition?.location || '—' }}</span>
+                      </div>
+                      <div class="flex justify-between py-1 border-b border-surface-100 dark:border-surface-800">
+                        <span class="text-surface-500 dark:text-surface-400">{{ locale === 'ua' ? 'Дата:' : 'Date:' }}</span>
+                        <span class="font-medium text-surface-900 dark:text-surface-0">{{ formatDate(competition?.date) }}</span>
+                      </div>
+                      <div class="flex justify-between py-1 border-b border-surface-100 dark:border-surface-800">
+                        <span class="text-surface-500 dark:text-surface-400">{{ locale === 'ua' ? 'Формат:' : 'Type:' }}</span>
+                        <span class="font-medium text-surface-900 dark:text-surface-0">
+                          {{ competitionTypeLabel(competition?.type, { locale }) }}
+                        </span>
+                      </div>
+                      <div
+                        v-if="competition?.type === COMPETITION_TYPE.BEST_OF_N"
+                        class="flex justify-between py-1 border-b border-surface-100 dark:border-surface-800"
+                      >
+                        <span class="text-surface-500 dark:text-surface-400">{{ locale === 'ua' ? 'Спроб (runs):' : 'Runs:' }}</span>
+                        <span class="font-medium text-surface-900 dark:text-surface-0">{{ competition?.runsCount || 2 }}</span>
+                      </div>
+                      <div v-if="competition?.description" class="pt-2">
+                        <div class="text-surface-500 dark:text-surface-400 text-xs mb-1 uppercase font-semibold">
+                          {{ locale === 'ua' ? 'Опис' : 'Description' }}
+                        </div>
+                        <p class="text-surface-700 dark:text-surface-300 whitespace-pre-line">{{ competition?.description }}</p>
+                      </div>
+                    </div>
+                  </template>
+                </Card>
+
+                <Card class="border border-surface-200 dark:border-surface-800 shadow-none">
+                  <template #title>
+                    <span class="text-base font-semibold">
+                      {{ locale === 'ua' ? 'Суддя часу (Timekeeper)' : 'Timekeeper Assignment' }}
+                    </span>
+                  </template>
+                  <template #content>
+                    <div class="text-sm">
+                      <p class="text-surface-600 dark:text-surface-400 mb-4">
+                        {{ locale === 'ua'
+                          ? 'Призначений хронометрист має право керувати таймерами на етапах цього турніру.'
+                          : 'Assigned timekeeper is permitted to start and stop stage timers for this competition.' }}
+                      </p>
+
+                      <div v-if="competition?.timekeeper" class="bg-surface-50 dark:bg-surface-800 p-3 rounded-lg flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                          <i class="pi pi-user text-primary-500"></i>
+                          <span class="font-medium text-surface-900 dark:text-surface-0">{{ competition.timekeeper }}</span>
+                        </div>
+                        <Button
+                          @click.prevent="removeTimekeeper"
+                          :label="locale === 'ua' ? 'Видалити' : 'Remove'"
+                          icon="pi pi-user-minus"
+                          severity="danger"
+                          size="small"
+                          text
+                        />
+                      </div>
+
+                      <div v-else class="flex flex-col sm:flex-row gap-2">
+                        <InputText
+                          name="email"
+                          type="email"
+                          :placeholder="locale === 'ua' ? 'Email судді часу' : 'Timekeeper email'"
+                          v-model="email"
+                          size="small"
+                          class="flex-1"
+                        />
+                        <Button
+                          @click.prevent="addTimekeeper"
+                          :label="locale === 'ua' ? 'Призначити' : 'Assign'"
+                          icon="pi pi-user-plus"
+                          severity="warn"
+                          size="small"
+                        />
+                      </div>
+                    </div>
+                  </template>
+                </Card>
+              </div>
+            </TabPanel>
+
+            <!-- TAB 2: STAGES -->
+            <TabPanel value="stages">
+              <div class="my-2">
+                <Message v-if="stageHint" severity="info" :closable="false" class="mb-4">
+                  {{ stageHint }}
+                </Message>
+
+                <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+                  <Button
+                    v-if="canAddStage"
+                    @click.prevent="openCreateStage"
+                    :label="createStageLabel"
+                    icon="pi pi-plus"
+                    size="small"
+                  />
+                  <Message v-else severity="secondary" :closable="false">
+                    {{ stageLimitMessage }}
+                  </Message>
+                </div>
+
+                <StagesView />
+              </div>
+            </TabPanel>
+
+            <!-- TAB 3: COMPETITORS -->
+            <TabPanel value="competitors">
+              <div class="my-2">
+                <CompetitionCompetitorsTab
+                  :competitionId="$route.params.id"
+                  :competitors="competitorsStore.competitionCompetitors"
+                  :stages="stagesStore.stages"
+                  @competitor-added="loadCompetitorsData"
+                  @competitor-deleted="loadCompetitorsData"
+                />
+              </div>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+
+        <!-- Create stage dialog -->
+        <Dialog v-model:visible="visible" modal :header="createStageLabel" :style="{ width: '25rem' }">
+          <template v-if="competitionType === COMPETITION_TYPE.QUALIFYING_FINAL">
+            <div class="flex flex-col gap-2 mb-8">
+              <label for="round" class="font-semibold">Round</label>
+              <Select
+                v-model="selectedRound"
+                inputId="round"
+                :options="missingRounds"
+                optionLabel="name"
+                optionValue="role"
+                placeholder="Select round"
+                class="w-full"
+              />
+            </div>
+          </template>
+          <template v-else>
+            <div class="flex items-center gap-4 mb-4">
+              <label for="stageNumber" class="font-semibold w-24">Stage number</label>
+              <InputNumber v-model="stageData.number" id="stageNumber" class="flex-auto" autocomplete="off"/>
+            </div>
+            <div class="flex items-center gap-4 mb-8">
+              <label for="stageName" class="font-semibold w-24">Name</label>
+              <InputText v-model="stageData.name" id="stageName" class="flex-auto" autocomplete="off" />
+            </div>
+          </template>
+          <div class="flex justify-end gap-2">
+            <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
+            <Button type="button" label="Create" @click="createStage"></Button>
+          </div>
+        </Dialog>
+
+        <Toast position="bottom-right"/>
+        <ConfirmDialog />
+      </template>
+    </Card>
+  </div>
 </template>
 
 <script setup>
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
 import { useRoute, useRouter } from 'vue-router'
-import { ref, onMounted, reactive, computed } from 'vue';
+import { ref, onMounted, onUnmounted, reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useCompetitionsStore } from '@/stores/competitions.js'
 import { useStagesStore } from '@/stores/stages.js'
+import { useCompetitorsStore } from '@/stores/competitors.js'
 import StagesView from '@/views/competitions/StagesView.vue'
+import CompetitionCompetitorsTab from '@/components/competitions/CompetitionCompetitorsTab.vue'
+import AppBreadcrumb from '@/components/navigation/AppBreadcrumb.vue'
 import {
   COMPETITION_TYPE,
   competitionTypeLabel,
@@ -148,6 +301,7 @@ const router = useRouter()
 const { locale } = useI18n()
 const competitionsStore = useCompetitionsStore()
 const stagesStore = useStagesStore()
+const competitorsStore = useCompetitorsStore()
 const confirm = useConfirm()
 const toast = useToast()
 
@@ -155,14 +309,47 @@ const competition = ref(null)
 const email = ref('')
 const visible = ref(false)
 const selectedRound = ref(null)
+const activeTab = ref('info')
+let unsubscribeCompetitors = null
+
 const stageData = reactive({
   number: 1,
-  name: ''
+  name: '',
+})
+
+const breadcrumbItems = computed(() => {
+  return [
+    {
+      label: competition.value?.name || (locale.value === 'ua' ? 'Змагання' : 'Competition'),
+    },
+  ]
 })
 
 const competitionType = computed(() => competition.value?.type || COMPETITION_TYPE.MULTI_STAGE)
 const stageHint = computed(() => getCompetitionType(competition.value?.type, locale.value)?.stageHint || '')
 const missingRounds = computed(() => missingQualifyingFinalStages(stagesStore.stages, locale.value))
+
+const formatDate = (dateVal) => {
+  if (!dateVal) return '—'
+  const d = new Date(dateVal)
+  if (isNaN(d.getTime())) return String(dateVal)
+  return d.toLocaleDateString(locale.value === 'ua' ? 'uk-UA' : 'en-US', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })
+}
+
+const totalCompetitorsCount = computed(() => {
+  const map = new Set()
+  competitorsStore.competitionCompetitors.forEach((c) => {
+    const key = c.competitorNumber != null
+      ? `num_${c.competitorNumber}`
+      : `name_${(c.secondName || '').trim().toLowerCase()}_${(c.name || '').trim().toLowerCase()}`
+    map.add(key)
+  })
+  return map.size
+})
 
 const canAddStage = computed(() => {
   if (competitionType.value === COMPETITION_TYPE.SINGLE_RUN) {
@@ -177,6 +364,14 @@ const canAddStage = computed(() => {
 const createStageLabel = computed(() => getCreateStageLabel(competitionType.value, locale.value))
 const stageLimitMessage = computed(() => getStageLimitMessage(competitionType.value, locale.value))
 
+const goToResults = () => {
+  router.push({ name: 'competition-results', params: { id: route.params.id } })
+}
+
+const goToEdit = () => {
+  router.push({ name: 'competition-edit', params: { id: route.params.id } })
+}
+
 const confirmDialog = () => {
   confirm.require({
     message: `Do you want to delete this competition?`,
@@ -186,60 +381,51 @@ const confirmDialog = () => {
     rejectProps: {
       label: 'Cancel',
       severity: 'secondary',
-      outlined: true
+      outlined: true,
     },
     acceptProps: {
       label: 'Delete',
       severity: 'danger',
     },
-    accept: () => {
-      competitionsStore.deleteCompetition(route.params.id)
-      router.push({name: 'competitions'})
+    accept: async () => {
+      await competitionsStore.deleteCompetition(route.params.id)
+      router.push({ name: 'competitions' })
       toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted', life: 3000 })
     },
     reject: () => {
       toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 })
     },
-  });
-};
-
-const goToResults = () => {
-  router.push({ name: 'competition-results', params: { id: route.params.id } })
+  })
 }
 
-const actions = ref([
-  {
-    label: 'Results',
-    icon: 'pi pi-trophy',
-    command: () => {
-      goToResults()
-    }
-  },
-  {
-    label: 'Edit',
-    icon: 'pi pi-pencil',
-    command: () => {
-      router.push({ name: 'competition-edit', params: { id: route.params.id } })
-    }
-  },
-  {
-    label: 'Delete',
-    icon: 'pi pi-trash',
-    command: () => {
-      confirmDialog()
-    }
+const loadCompetitorsData = () => {
+  if (unsubscribeCompetitors) {
+    unsubscribeCompetitors()
+    unsubscribeCompetitors = null
   }
-])
+  const stageIds = stagesStore.stages.map((s) => s.id)
+  if (stageIds.length > 0) {
+    unsubscribeCompetitors = competitorsStore.subscribeToCompetitionCompetitors(stageIds)
+  }
+}
 
 onMounted(async () => {
   competition.value = await competitionsStore.getCompetitionById(route.params.id)
   await stagesStore.getStages(route.params.id)
+  loadCompetitorsData()
+})
+
+onUnmounted(() => {
+  if (unsubscribeCompetitors) {
+    unsubscribeCompetitors()
+  }
 })
 
 const openCreateStage = async () => {
   const isEn = locale.value === 'en'
   if (competitionType.value === COMPETITION_TYPE.SINGLE_RUN) {
     await stagesStore.createStage(route.params.id, 1, isEn ? 'Run' : 'Заїзд', 'run')
+    loadCompetitorsData()
     return
   }
 
@@ -249,6 +435,7 @@ const openCreateStage = async () => {
     const runsCount = Math.max(2, stagesStore.stages.length + 1)
     await competitionsStore.updateRunsCount(route.params.id, runsCount)
     if (competition.value) competition.value.runsCount = runsCount
+    loadCompetitorsData()
     return
   }
 
@@ -256,6 +443,7 @@ const openCreateStage = async () => {
     if (missingRounds.value.length === 1) {
       const stage = missingRounds.value[0]
       await stagesStore.createStage(route.params.id, stage.number, stage.name, stage.role)
+      loadCompetitorsData()
       return
     }
     selectedRound.value = missingRounds.value[0]?.role || null
@@ -275,12 +463,14 @@ const createStage = async () => {
     if (!stage) return
     visible.value = false
     await stagesStore.createStage(route.params.id, stage.number, stage.name, stage.role)
+    loadCompetitorsData()
     return
   }
 
   if (!stageData.name) return
   visible.value = false
   await stagesStore.createStage(route.params.id, stageData.number, stageData.name, 'special')
+  loadCompetitorsData()
 }
 
 const addTimekeeper = async () => {
@@ -292,9 +482,4 @@ const removeTimekeeper = async () => {
   await competitionsStore.removeTimekeeper(route.params.id)
   competition.value = await competitionsStore.getCompetitionById(route.params.id)
 }
-
 </script>
-
-<style scoped lang="scss">
-
-</style>
