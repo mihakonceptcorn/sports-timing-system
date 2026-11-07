@@ -34,9 +34,17 @@
           <Tag :value="roleLabel(slotProps.data.role)" severity="secondary" class="text-xs" />
         </template>
       </Column>
-      <Column field="action" :header="locale === 'ua' ? 'Дії' : 'Actions'" headerStyle="width: 8rem">
+      <Column field="action" :header="locale === 'ua' ? 'Дії' : 'Actions'" headerStyle="width: 10rem">
         <template #body="slotProps">
           <div class="flex items-center gap-1">
+            <Button
+              icon="pi pi-play"
+              rounded
+              size="small"
+              severity="success"
+              :title="locale === 'ua' ? 'Стартовий стіл' : 'Start Gate'"
+              @click.prevent="$router.push({ name: 'started', params: { id: $route.params.id, stageId: slotProps.data.id } })"
+            />
             <Button
               icon="pi pi-arrow-right"
               rounded

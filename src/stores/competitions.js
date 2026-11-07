@@ -25,6 +25,8 @@ function mapCompetition(docSnap) {
     type: data.type || null,
     runsCount: data.runsCount ?? null,
     timekeeper: data.timekeeper || null,
+    startJudge: data.startJudge || null,
+    finishJudge: data.finishJudge || data.timekeeper || null,
   }
 }
 
@@ -68,6 +70,7 @@ export const useCompetitionsStore = defineStore('competitions', {
       this.getTimekeepingCompetitions()
     },
     getCompetitions() {
+      if (getCompetitionsSnapshot) getCompetitionsSnapshot()
       getCompetitionsSnapshot = onSnapshot(competitionsCollectionQuery, (querySnapshot) => {
         let competitions = []
         querySnapshot.forEach((docSnap) => {
@@ -122,31 +125,54 @@ export const useCompetitionsStore = defineStore('competitions', {
         console.log("No such document!")
       }
     },
-    async addTimekeeper(competitionId, email) {
+    async setStartJudge(competitionId, email) {
       await updateDoc(doc(competitionsCollectionRef, competitionId), {
-        timekeeper: email
-      });
+        startJudge: email?.trim() || null,
+      })
+    },
+    async removeStartJudge(competitionId) {
+      await updateDoc(doc(competitionsCollectionRef, competitionId), {
+        startJudge: null,
+      })
+    },
+    async setFinishJudge(competitionId, email) {
+      await updateDoc(doc(competitionsCollectionRef, competitionId), {
+        finishJudge: email?.trim() || null,
+        timekeeper: email?.trim() || null, // backward compatibility
+      })
+    },
+    async removeFinishJudge(competitionId) {
+      await updateDoc(doc(competitionsCollectionRef, competitionId), {
+        finishJudge: null,
+        timekeeper: null,
+      })
+    },
+    async addTimekeeper(competitionId, email) {
+      await this.setFinishJudge(competitionId, email)
     },
     async removeTimekeeper(competitionId) {
-      await updateDoc(doc(competitionsCollectionRef, competitionId), {
-        timekeeper: null
-      });
+      await this.removeFinishJudge(competitionId)
     },
     getTimekeepingCompetitions() {
-      const timekeepingCollectionQuery = query(
-        competitionsCollectionRef,
-        where('timekeeper', '==', storeAuth.user.email)
-      );
-
-      getTimekeepingSnapshot = onSnapshot(timekeepingCollectionQuery, (querySnapshot) => {
+      const email = storeAuth.user.email
+      if (getTimekeepingSnapshot) getTimekeepingSnapshot()
+      // Listen to all competitions and filter those where user is startJudge, finishJudge or timekeeper
+      getTimekeepingSnapshot = onSnapshot(competitionsCollectionRef, (querySnapshot) => {
         let tkCompetitions = []
         querySnapshot.forEach((docSnap) => {
-          tkCompetitions.push(mapCompetition(docSnap))
-        });
+          const comp = mapCompetition(docSnap)
+          if (
+            comp.startJudge === email ||
+            comp.finishJudge === email ||
+            comp.timekeeper === email
+          ) {
+            tkCompetitions.push(comp)
+          }
+        })
         this.timeKeepingCompetitions = tkCompetitions
-      }, error => {
+      }, (error) => {
         console.log('error.message: ', error.message)
-      });
+      })
     }
   }
 })

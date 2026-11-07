@@ -15,6 +15,12 @@ export const useCompetitorsStore = defineStore('competitors', {
     }
   },
   actions: {
+    clearCompetitors() {
+      competitionCompetitorsUnsubscribes.forEach((unsub) => unsub())
+      competitionCompetitorsUnsubscribes = []
+      this.competitors = []
+      this.competitionCompetitors = []
+    },
     async getCompetitors(stageId) {
       const q = query(competitorsCollectionRef, where('stageId', '==', stageId));
 
@@ -211,6 +217,21 @@ export const useCompetitorsStore = defineStore('competitors', {
     async updateFinishTime(id, timestamp) {
       await updateDoc(doc(competitorsCollectionRef, id), {
         finishTime: timestamp
+      });
+    },
+    async markDns(id) {
+      await updateDoc(doc(competitorsCollectionRef, id), {
+        started: false,
+        status: 'DNS',
+        dns: true,
+      });
+    },
+    async resetStart(id) {
+      await updateDoc(doc(competitorsCollectionRef, id), {
+        started: false,
+        startTime: null,
+        status: null,
+        dns: false,
       });
     }
   }

@@ -12,6 +12,7 @@ import {
 import { db } from '@/js/firebase'
 
 const stagesCollectionRef = collection(db, 'stages');
+let stagesUnsubscribe = null;
 
 export const useStagesStore = defineStore('stages', {
   state: () => {
@@ -20,21 +21,32 @@ export const useStagesStore = defineStore('stages', {
     }
   },
   actions: {
+    clearStages() {
+      if (stagesUnsubscribe) {
+        stagesUnsubscribe()
+        stagesUnsubscribe = null
+      }
+      this.stages = []
+    },
     async getStages(competitionId) {
+      this.clearStages()
+
+      if (!competitionId) return
+
       const q = query(
         stagesCollectionRef,
         where('competitionId', '==', competitionId),
         orderBy('number', 'desc')
       );
-      const querySnapshot = onSnapshot(q, (querySnapshot) => {
+      stagesUnsubscribe = onSnapshot(q, (querySnapshot) => {
         const stages = []
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach((docSnap) => {
           let stage = {
-            id: doc.id,
-            competitionId: doc.data().competitionId,
-            number: doc.data().number,
-            name: doc.data().name,
-            role: doc.data().role || null,
+            id: docSnap.id,
+            competitionId: docSnap.data().competitionId,
+            number: docSnap.data().number,
+            name: docSnap.data().name,
+            role: docSnap.data().role || null,
           }
           stages.push(stage)
         });

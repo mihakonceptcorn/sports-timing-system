@@ -46,11 +46,15 @@
 <script setup>
 import { reactive, ref } from 'vue';
 import { useCompetitionsStore } from '@/stores/competitions.js'
+import { useStagesStore } from '@/stores/stages.js'
+import { useCompetitorsStore } from '@/stores/competitors.js'
 import { useRouter } from 'vue-router';
 import CompetitionTypeField from '@/components/competitions/CompetitionTypeField.vue'
 import { COMPETITION_TYPE } from '@/constants/competitionTypes'
 
 const competitionsStore = useCompetitionsStore()
+const stagesStore = useStagesStore()
+const competitorsStore = useCompetitorsStore()
 const router = useRouter()
 const error = ref('')
 
@@ -77,6 +81,8 @@ const create = async () => {
   }
 
   error.value = ''
+  competitorsStore.clearCompetitors()
+  stagesStore.clearStages()
   await competitionsStore.createCompetition(formData)
   await router.push({name: 'competitions'})
 }

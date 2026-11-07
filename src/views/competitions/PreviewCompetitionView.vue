@@ -146,48 +146,89 @@
                 <Card class="border border-surface-200 dark:border-surface-800 shadow-none">
                   <template #title>
                     <span class="text-base font-semibold">
-                      {{ locale === 'ua' ? 'Суддя часу (Timekeeper)' : 'Timekeeper Assignment' }}
+                      {{ locale === 'ua' ? 'Суддівська колегія' : 'Judges & Timekeepers' }}
                     </span>
                   </template>
                   <template #content>
-                    <div class="text-sm">
-                      <p class="text-surface-600 dark:text-surface-400 mb-4">
-                        {{ locale === 'ua'
-                          ? 'Призначений хронометрист має право керувати таймерами на етапах цього турніру.'
-                          : 'Assigned timekeeper is permitted to start and stop stage timers for this competition.' }}
-                      </p>
-
-                      <div v-if="competition?.timekeeper" class="bg-surface-50 dark:bg-surface-800 p-3 rounded-lg flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                          <i class="pi pi-user text-primary-500"></i>
-                          <span class="font-medium text-surface-900 dark:text-surface-0">{{ competition.timekeeper }}</span>
+                    <div class="text-sm flex flex-col gap-4">
+                      <!-- Start Judge -->
+                      <div class="border-b border-surface-100 dark:border-surface-800 pb-3">
+                        <div class="flex items-center justify-between mb-1">
+                          <label class="font-semibold text-xs uppercase text-surface-500 dark:text-surface-400">
+                            {{ locale === 'ua' ? '🏁 Суддя на старті' : '🏁 Start Judge' }}
+                          </label>
                         </div>
-                        <Button
-                          @click.prevent="removeTimekeeper"
-                          :label="locale === 'ua' ? 'Видалити' : 'Remove'"
-                          icon="pi pi-user-minus"
-                          severity="danger"
-                          size="small"
-                          text
-                        />
+                        <div v-if="competition?.startJudge" class="bg-surface-50 dark:bg-surface-800 p-2.5 rounded-lg flex items-center justify-between mt-1">
+                          <div class="flex items-center gap-2 truncate">
+                            <i class="pi pi-play text-green-500 text-xs"></i>
+                            <span class="font-medium text-surface-900 dark:text-surface-0 truncate">{{ competition.startJudge }}</span>
+                          </div>
+                          <Button
+                            @click.prevent="removeStartJudge"
+                            icon="pi pi-times"
+                            severity="danger"
+                            size="small"
+                            text
+                            rounded
+                            :title="locale === 'ua' ? 'Видалити' : 'Remove'"
+                          />
+                        </div>
+                        <div v-else class="flex gap-2 mt-1">
+                          <InputText
+                            type="email"
+                            :placeholder="locale === 'ua' ? 'Email судді на старті' : 'Start judge email'"
+                            v-model="startJudgeEmail"
+                            size="small"
+                            class="flex-1"
+                          />
+                          <Button
+                            @click.prevent="saveStartJudge"
+                            :label="locale === 'ua' ? 'Призначити' : 'Assign'"
+                            icon="pi pi-check"
+                            severity="success"
+                            size="small"
+                          />
+                        </div>
                       </div>
 
-                      <div v-else class="flex flex-col sm:flex-row gap-2">
-                        <InputText
-                          name="email"
-                          type="email"
-                          :placeholder="locale === 'ua' ? 'Email судді часу' : 'Timekeeper email'"
-                          v-model="email"
-                          size="small"
-                          class="flex-1"
-                        />
-                        <Button
-                          @click.prevent="addTimekeeper"
-                          :label="locale === 'ua' ? 'Призначити' : 'Assign'"
-                          icon="pi pi-user-plus"
-                          severity="warn"
-                          size="small"
-                        />
+                      <!-- Finish Judge -->
+                      <div>
+                        <div class="flex items-center justify-between mb-1">
+                          <label class="font-semibold text-xs uppercase text-surface-500 dark:text-surface-400">
+                            {{ locale === 'ua' ? '⏱️ Суддя на фініші' : '⏱️ Finish Judge' }}
+                          </label>
+                        </div>
+                        <div v-if="competition?.finishJudge || competition?.timekeeper" class="bg-surface-50 dark:bg-surface-800 p-2.5 rounded-lg flex items-center justify-between mt-1">
+                          <div class="flex items-center gap-2 truncate">
+                            <i class="pi pi-stopwatch text-amber-500 text-xs"></i>
+                            <span class="font-medium text-surface-900 dark:text-surface-0 truncate">{{ competition.finishJudge || competition.timekeeper }}</span>
+                          </div>
+                          <Button
+                            @click.prevent="removeFinishJudge"
+                            icon="pi pi-times"
+                            severity="danger"
+                            size="small"
+                            text
+                            rounded
+                            :title="locale === 'ua' ? 'Видалити' : 'Remove'"
+                          />
+                        </div>
+                        <div v-else class="flex gap-2 mt-1">
+                          <InputText
+                            type="email"
+                            :placeholder="locale === 'ua' ? 'Email судді на фініші' : 'Finish judge email'"
+                            v-model="finishJudgeEmail"
+                            size="small"
+                            class="flex-1"
+                          />
+                          <Button
+                            @click.prevent="saveFinishJudge"
+                            :label="locale === 'ua' ? 'Призначити' : 'Assign'"
+                            icon="pi pi-check"
+                            severity="warn"
+                            size="small"
+                          />
+                        </div>
                       </div>
                     </div>
                   </template>
@@ -277,8 +318,10 @@
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
 import { useRoute, useRouter } from 'vue-router'
-import { ref, onMounted, onUnmounted, reactive, computed } from 'vue'
+import { ref, onMounted, onUnmounted, reactive, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { doc, updateDoc } from 'firebase/firestore'
+import { db } from '@/js/firebase'
 import { useCompetitionsStore } from '@/stores/competitions.js'
 import { useStagesStore } from '@/stores/stages.js'
 import { useCompetitorsStore } from '@/stores/competitors.js'
@@ -306,7 +349,8 @@ const confirm = useConfirm()
 const toast = useToast()
 
 const competition = ref(null)
-const email = ref('')
+const startJudgeEmail = ref('')
+const finishJudgeEmail = ref('')
 const visible = ref(false)
 const selectedRound = ref(null)
 const activeTab = ref('info')
@@ -404,21 +448,47 @@ const loadCompetitorsData = () => {
     unsubscribeCompetitors = null
   }
   const stageIds = stagesStore.stages.map((s) => s.id)
-  if (stageIds.length > 0) {
-    unsubscribeCompetitors = competitorsStore.subscribeToCompetitionCompetitors(stageIds)
-  }
+  unsubscribeCompetitors = competitorsStore.subscribeToCompetitionCompetitors(stageIds)
 }
 
-onMounted(async () => {
+const initViewData = async () => {
+  competitorsStore.clearCompetitors()
+  stagesStore.clearStages()
+  competition.value = null
+
   competition.value = await competitionsStore.getCompetitionById(route.params.id)
   await stagesStore.getStages(route.params.id)
   loadCompetitorsData()
+}
+
+onMounted(() => {
+  initViewData()
 })
+
+watch(
+  () => route.params.id,
+  (newId, oldId) => {
+    if (newId && newId !== oldId) {
+      initViewData()
+    }
+  }
+)
+
+watch(
+  () => stagesStore.stages,
+  () => {
+    loadCompetitorsData()
+  },
+  { deep: true }
+)
 
 onUnmounted(() => {
   if (unsubscribeCompetitors) {
     unsubscribeCompetitors()
+    unsubscribeCompetitors = null
   }
+  competitorsStore.clearCompetitors()
+  stagesStore.clearStages()
 })
 
 const openCreateStage = async () => {
@@ -473,13 +543,49 @@ const createStage = async () => {
   loadCompetitorsData()
 }
 
-const addTimekeeper = async () => {
-  await competitionsStore.addTimekeeper(route.params.id, email.value)
+const saveStartJudge = async () => {
+  const email = startJudgeEmail.value?.trim()
+  if (!email) return
+  if (typeof competitionsStore.setStartJudge === 'function') {
+    await competitionsStore.setStartJudge(route.params.id, email)
+  } else {
+    await updateDoc(doc(db, 'competitions', route.params.id), { startJudge: email })
+  }
   competition.value = await competitionsStore.getCompetitionById(route.params.id)
+  startJudgeEmail.value = ''
+  toast.add({ severity: 'success', summary: 'Успішно', detail: 'Суддю на старті призначено', life: 3000 })
 }
 
-const removeTimekeeper = async () => {
-  await competitionsStore.removeTimekeeper(route.params.id)
+const removeStartJudge = async () => {
+  if (typeof competitionsStore.removeStartJudge === 'function') {
+    await competitionsStore.removeStartJudge(route.params.id)
+  } else {
+    await updateDoc(doc(db, 'competitions', route.params.id), { startJudge: null })
+  }
   competition.value = await competitionsStore.getCompetitionById(route.params.id)
+  toast.add({ severity: 'info', summary: 'Видалено', detail: 'Суддю на старті видалено', life: 3000 })
+}
+
+const saveFinishJudge = async () => {
+  const email = finishJudgeEmail.value?.trim()
+  if (!email) return
+  if (typeof competitionsStore.setFinishJudge === 'function') {
+    await competitionsStore.setFinishJudge(route.params.id, email)
+  } else {
+    await updateDoc(doc(db, 'competitions', route.params.id), { finishJudge: email, timekeeper: email })
+  }
+  competition.value = await competitionsStore.getCompetitionById(route.params.id)
+  finishJudgeEmail.value = ''
+  toast.add({ severity: 'success', summary: 'Успішно', detail: 'Суддю на фініші призначено', life: 3000 })
+}
+
+const removeFinishJudge = async () => {
+  if (typeof competitionsStore.removeFinishJudge === 'function') {
+    await competitionsStore.removeFinishJudge(route.params.id)
+  } else {
+    await updateDoc(doc(db, 'competitions', route.params.id), { finishJudge: null, timekeeper: null })
+  }
+  competition.value = await competitionsStore.getCompetitionById(route.params.id)
+  toast.add({ severity: 'info', summary: 'Видалено', detail: 'Суддю на фініші видалено', life: 3000 })
 }
 </script>
