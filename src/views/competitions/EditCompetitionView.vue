@@ -91,7 +91,7 @@ const breadcrumbItems = computed(() => [
 const update = async () => {
   competition.value.date = competitionDate.value
   await competitionsStore.updateCompetition(competition.value)
-  await router.push({name: 'competitions'})
+  await router.push({ name: 'competition-preview', params: { id: route.params.id } })
 }
 
 onMounted(async () => {

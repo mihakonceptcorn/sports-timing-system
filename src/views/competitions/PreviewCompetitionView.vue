@@ -452,9 +452,9 @@ const loadCompetitorsData = () => {
 }
 
 const initViewData = async () => {
+  competition.value = null
   competitorsStore.clearCompetitors()
   stagesStore.clearStages()
-  competition.value = null
 
   competition.value = await competitionsStore.getCompetitionById(route.params.id)
   await stagesStore.getStages(route.params.id)
@@ -476,8 +476,10 @@ watch(
 
 watch(
   () => stagesStore.stages,
-  () => {
-    loadCompetitorsData()
+  (newStages) => {
+    if (newStages && newStages.length > 0) {
+      loadCompetitorsData()
+    }
   },
   { deep: true }
 )

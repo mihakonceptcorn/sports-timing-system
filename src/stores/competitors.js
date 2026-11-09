@@ -16,7 +16,10 @@ export const useCompetitorsStore = defineStore('competitors', {
   },
   actions: {
     clearCompetitors() {
-      competitionCompetitorsUnsubscribes.forEach((unsub) => unsub())
+      // console.log('Clearing competitors and unsubscribing from', competitionCompetitorsUnsubscribes.length, 'listeners')
+      competitionCompetitorsUnsubscribes.forEach((unsub) => {
+        if (typeof unsub === 'function') unsub()
+      })
       competitionCompetitorsUnsubscribes = []
       this.competitors = []
       this.competitionCompetitors = []
@@ -53,11 +56,9 @@ export const useCompetitorsStore = defineStore('competitors', {
     },
     subscribeToCompetitionCompetitors(stageIds, callback) {
       // Clean up previous subscriptions
-      competitionCompetitorsUnsubscribes.forEach((unsub) => unsub())
-      competitionCompetitorsUnsubscribes = []
+      this.clearCompetitors()
 
       if (!stageIds || stageIds.length === 0) {
-        this.competitionCompetitors = []
         if (callback) callback([])
         return () => {}
       }
@@ -103,8 +104,7 @@ export const useCompetitorsStore = defineStore('competitors', {
       })
 
       return () => {
-        competitionCompetitorsUnsubscribes.forEach((unsub) => unsub())
-        competitionCompetitorsUnsubscribes = []
+        this.clearCompetitors()
       }
     },
     async getCompetitionCompetitors(stageIds) {

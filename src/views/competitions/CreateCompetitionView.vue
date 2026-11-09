@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 import { useCompetitionsStore } from '@/stores/competitions.js'
 import { useStagesStore } from '@/stores/stages.js'
 import { useCompetitorsStore } from '@/stores/competitors.js'
@@ -57,6 +57,11 @@ const stagesStore = useStagesStore()
 const competitorsStore = useCompetitorsStore()
 const router = useRouter()
 const error = ref('')
+
+onMounted(() => {
+  competitorsStore.clearCompetitors()
+  stagesStore.clearStages()
+})
 
 const formData = reactive({
   name: null,
@@ -83,8 +88,8 @@ const create = async () => {
   error.value = ''
   competitorsStore.clearCompetitors()
   stagesStore.clearStages()
-  await competitionsStore.createCompetition(formData)
-  await router.push({name: 'competitions'})
+  const id = await competitionsStore.createCompetition(formData)
+  await router.push({ name: 'competition-preview', params: { id } })
 }
 
 </script>
